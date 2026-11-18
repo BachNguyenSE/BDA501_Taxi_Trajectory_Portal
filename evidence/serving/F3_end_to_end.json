@@ -1,0 +1,484 @@
+{
+  "summary": {
+    "n_trips": 20,
+    "mae_min_on_these_trips": 2.94,
+    "note": "MAE trên 20 chuyến mẫu chỉ minh họa; số đánh giá chính thức là MAE trên toàn tập test (E_model_validation.md)."
+  },
+  "trips": [
+    {
+      "trip_id": "1399135956620000324",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-03 17:52:36",
+      "origin_lat_lon": [
+        41.146569,
+        -8.611317
+      ],
+      "destination_lat_lon": [
+        41.150781,
+        -8.59869
+      ],
+      "actual_duration_min": 7.75,
+      "predicted_duration_min": 8.16,
+      "error_min": 0.41,
+      "route_zones": 4,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1399217372620000084",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-04 16:29:32",
+      "origin_lat_lon": [
+        41.140503,
+        -8.613144
+      ],
+      "destination_lat_lon": [
+        41.23674,
+        -8.669871
+      ],
+      "actual_duration_min": 32.75,
+      "predicted_duration_min": 22.13,
+      "error_min": -10.62,
+      "route_zones": 25,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1399226240620000009",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-04 18:57:20",
+      "origin_lat_lon": [
+        41.182713,
+        -8.600013
+      ],
+      "destination_lat_lon": [
+        41.1921,
+        -8.606916
+      ],
+      "actual_duration_min": 4.5,
+      "predicted_duration_min": 7.5,
+      "error_min": 3.0,
+      "route_zones": 3,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1399436669620000345",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-07 05:24:29",
+      "origin_lat_lon": [
+        41.184234,
+        -8.600112
+      ],
+      "destination_lat_lon": [
+        41.22576,
+        -8.681499
+      ],
+      "actual_duration_min": 19.75,
+      "predicted_duration_min": 15.52,
+      "error_min": -4.23,
+      "route_zones": 21,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1399459583620000314",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-07 11:46:23",
+      "origin_lat_lon": [
+        41.161023,
+        -8.659728
+      ],
+      "destination_lat_lon": [
+        41.236902,
+        -8.670087
+      ],
+      "actual_duration_min": 16.0,
+      "predicted_duration_min": 16.26,
+      "error_min": 0.26,
+      "route_zones": 18,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1399923831620000157",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-12 20:43:51",
+      "origin_lat_lon": [
+        41.16051,
+        -8.644194
+      ],
+      "destination_lat_lon": [
+        41.177772,
+        -8.691363
+      ],
+      "actual_duration_min": 14.25,
+      "predicted_duration_min": 12.27,
+      "error_min": -1.98,
+      "route_zones": 12,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1400792965620000280",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-22 22:09:25",
+      "origin_lat_lon": [
+        41.154462,
+        -8.613225
+      ],
+      "destination_lat_lon": [
+        41.160663,
+        -8.604414
+      ],
+      "actual_duration_min": 4.0,
+      "predicted_duration_min": 6.59,
+      "error_min": 2.59,
+      "route_zones": 3,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1401008173620000672",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-05-25 09:56:13",
+      "origin_lat_lon": [
+        41.148027,
+        -8.619903
+      ],
+      "destination_lat_lon": [
+        41.148927,
+        -8.585649
+      ],
+      "actual_duration_min": 16.0,
+      "predicted_duration_min": 10.01,
+      "error_min": -5.99,
+      "route_zones": 7,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402051073620000276",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-06 11:37:53",
+      "origin_lat_lon": [
+        41.172039,
+        -8.599014
+      ],
+      "destination_lat_lon": [
+        41.166783,
+        -8.566659
+      ],
+      "actual_duration_min": 12.25,
+      "predicted_duration_min": 12.46,
+      "error_min": 0.21,
+      "route_zones": 7,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402072726620000370",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-06 17:38:46",
+      "origin_lat_lon": [
+        41.153913,
+        -8.674074
+      ],
+      "destination_lat_lon": [
+        41.145921,
+        -8.612577
+      ],
+      "actual_duration_min": 21.25,
+      "predicted_duration_min": 20.52,
+      "error_min": -0.73,
+      "route_zones": 13,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402263306620000508",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-08 22:35:06",
+      "origin_lat_lon": [
+        41.149242,
+        -8.59932
+      ],
+      "destination_lat_lon": [
+        41.179356,
+        -8.624799
+      ],
+      "actual_duration_min": 14.0,
+      "predicted_duration_min": 11.53,
+      "error_min": -2.47,
+      "route_zones": 7,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402400812620000486",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-10 12:46:52",
+      "origin_lat_lon": [
+        41.144742,
+        -8.606439
+      ],
+      "destination_lat_lon": [
+        41.161257,
+        -8.596575
+      ],
+      "actual_duration_min": 9.5,
+      "predicted_duration_min": 9.19,
+      "error_min": -0.31,
+      "route_zones": 5,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402634695620000574",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-13 05:44:55",
+      "origin_lat_lon": [
+        41.155776,
+        -8.602533
+      ],
+      "destination_lat_lon": [
+        41.182785,
+        -8.598699
+      ],
+      "actual_duration_min": 10.25,
+      "predicted_duration_min": 8.88,
+      "error_min": -1.37,
+      "route_zones": 7,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402794617620000351",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-15 02:10:17",
+      "origin_lat_lon": [
+        41.145597,
+        -8.610894
+      ],
+      "destination_lat_lon": [
+        41.166657,
+        -8.566497
+      ],
+      "actual_duration_min": 8.25,
+      "predicted_duration_min": 11.08,
+      "error_min": 2.83,
+      "route_zones": 10,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402913747620000112",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-16 11:15:47",
+      "origin_lat_lon": [
+        41.159529,
+        -8.575749
+      ],
+      "destination_lat_lon": [
+        41.173497,
+        -8.653284
+      ],
+      "actual_duration_min": 14.5,
+      "predicted_duration_min": 16.85,
+      "error_min": 2.35,
+      "route_zones": 17,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1402926001620000331",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-16 14:40:01",
+      "origin_lat_lon": [
+        41.156298,
+        -8.681247
+      ],
+      "destination_lat_lon": [
+        41.152257,
+        -8.60706
+      ],
+      "actual_duration_min": 17.25,
+      "predicted_duration_min": 19.8,
+      "error_min": 2.55,
+      "route_zones": 16,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1403214774620000328",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-19 22:52:54",
+      "origin_lat_lon": [
+        41.148558,
+        -8.585649
+      ],
+      "destination_lat_lon": [
+        41.160042,
+        -8.640603
+      ],
+      "actual_duration_min": 11.5,
+      "predicted_duration_min": 12.44,
+      "error_min": 0.94,
+      "route_zones": 17,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1403580092620000503",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-24 04:21:32",
+      "origin_lat_lon": [
+        41.147235,
+        -8.615349
+      ],
+      "destination_lat_lon": [
+        41.176359,
+        -8.587701
+      ],
+      "actual_duration_min": 9.5,
+      "predicted_duration_min": 11.77,
+      "error_min": 2.27,
+      "route_zones": 9,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1403766605620000281",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-26 08:10:05",
+      "origin_lat_lon": [
+        41.148558,
+        -8.585631
+      ],
+      "destination_lat_lon": [
+        41.157378,
+        -8.666856
+      ],
+      "actual_duration_min": 14.75,
+      "predicted_duration_min": 18.51,
+      "error_min": 3.76,
+      "route_zones": 17,
+      "congested_zones": [
+        1500
+      ],
+      "live_available": true,
+      "matches_sample_file": true
+    },
+    {
+      "trip_id": "1403958872620000456",
+      "raw_rows_with_this_id": 1,
+      "departure_local": "2014-06-28 13:34:32",
+      "origin_lat_lon": [
+        41.145651,
+        -8.61084
+      ],
+      "destination_lat_lon": [
+        41.098149,
+        -8.56269
+      ],
+      "actual_duration_min": 28.25,
+      "predicted_duration_min": 18.27,
+      "error_min": -9.98,
+      "route_zones": 16,
+      "congested_zones": [],
+      "live_available": true,
+      "matches_sample_file": true
+    }
+  ],
+  "full_response_first_trip": {
+    "predicted_duration_min": 8.16,
+    "predicted_interval_min": [
+      4.03,
+      12.1
+    ],
+    "route": [
+      {
+        "zone_id": 1367,
+        "gx": 37,
+        "gy": 19,
+        "center_lat": 41.147499999999994,
+        "center_lon": -8.6125,
+        "level": "đông",
+        "speed_kmh": 11.11,
+        "ratio_vs_all_day": 0.888
+      },
+      {
+        "zone_id": 1438,
+        "gx": 38,
+        "gy": 20,
+        "center_lat": 41.152499999999996,
+        "center_lon": -8.6075,
+        "level": "thông thoáng",
+        "speed_kmh": 18.08,
+        "ratio_vs_all_day": 0.973
+      },
+      {
+        "zone_id": 1439,
+        "gx": 39,
+        "gy": 20,
+        "center_lat": 41.152499999999996,
+        "center_lon": -8.602500000000001,
+        "level": "thông thoáng",
+        "speed_kmh": 18.1,
+        "ratio_vs_all_day": 1.006
+      },
+      {
+        "zone_id": 1440,
+        "gx": 40,
+        "gy": 20,
+        "center_lat": 41.152499999999996,
+        "center_lon": -8.5975,
+        "level": "thông thoáng",
+        "speed_kmh": 20.31,
+        "ratio_vs_all_day": 0.928
+      }
+    ],
+    "congested_zones": [],
+    "live": {
+      "available": true,
+      "window_start": "2014-05-14 18:55:00",
+      "window_end": "2014-05-14 19:10:00",
+      "zones_with_live_data": 3,
+      "slow_zones": []
+    },
+    "debug": {
+      "features": {
+        "straight_km": 1.1563556876915573,
+        "bearing_deg": 66.10314824869164,
+        "hour": 17,
+        "day_of_week": 7,
+        "is_weekend": true,
+        "is_holiday": false
+      },
+      "origin_zone": 1367,
+      "dest_zone": 1440,
+      "origin_snapped": false,
+      "dest_snapped": false,
+      "graph_route_time_min": 5.73,
+      "model": "spark_gbt_train_all"
+    }
+  }
+}

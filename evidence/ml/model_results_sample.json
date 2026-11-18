@@ -1,0 +1,197 @@
+{
+  "mode": "sample",
+  "rows": {
+    "train_all": 13743,
+    "train_no_gps_jump": 12343,
+    "test_all": 3147,
+    "test_no_gps_jump": 2822
+  },
+  "results": {
+    "train_all -> test_all": {
+      "naive_mean": {
+        "n": 3147,
+        "mae": 5.397116493728294,
+        "rmse": 8.655683090724823,
+        "signed_error": 0.2375071680481806,
+        "mean_label": 11.906657133778202,
+        "r2": -0.0007534906397455021
+      },
+      "historical_speed": {
+        "n": 3147,
+        "mae": 6.26038849603838,
+        "rmse": 11.59866836456937,
+        "signed_error": -0.36090913473208386,
+        "mean_label": 11.906657133778202,
+        "r2": -0.796969397348978
+      },
+      "linear_regression": {
+        "n": 3147,
+        "mae": 4.628596836525654,
+        "rmse": 7.949783422098434,
+        "signed_error": 0.23158055229306646,
+        "mean_label": 11.906657133778202,
+        "r2": 0.15582008810101966
+      },
+      "gbt": {
+        "n": 3147,
+        "mae": 4.181345596249933,
+        "rmse": 7.612801552882529,
+        "signed_error": 0.2736139211293421,
+        "mean_label": 11.906657133778202,
+        "r2": 0.22587082202545405
+      }
+    },
+    "train_all -> test_no_gps_jump": {
+      "naive_mean": {
+        "n": 2822,
+        "mae": 5.236216583271335,
+        "rmse": 8.029531310732555,
+        "signed_error": 0.43500413173424785,
+        "mean_label": 11.709160170092133,
+        "r2": -0.0029436277976486735
+      },
+      "historical_speed": {
+        "n": 2822,
+        "mae": 5.853409229066854,
+        "rmse": 10.63543588855492,
+        "signed_error": -0.9378053891852678,
+        "mean_label": 11.709160170092133,
+        "r2": -0.7595706913830402
+      },
+      "linear_regression": {
+        "n": 2822,
+        "mae": 4.4966656025972,
+        "rmse": 7.380880476283804,
+        "signed_error": 0.35029374890108345,
+        "mean_label": 11.709160170092133,
+        "r2": 0.1525531365509991
+      },
+      "gbt": {
+        "n": 2822,
+        "mae": 4.067720379724834,
+        "rmse": 7.091647609802443,
+        "signed_error": 0.3592261727506577,
+        "mean_label": 11.709160170092133,
+        "r2": 0.2176692054935052
+      }
+    },
+    "train_no_gps_jump -> test_all": {
+      "naive_mean": {
+        "n": 3147,
+        "mae": 5.367026580897695,
+        "rmse": 8.653246206899558,
+        "signed_error": 0.11928874647781569,
+        "mean_label": 11.906657133778202,
+        "r2": -0.00019007428646955482
+      },
+      "historical_speed": {
+        "n": 3147,
+        "mae": 6.26038849603838,
+        "rmse": 11.59866836456937,
+        "signed_error": -0.36090913473208386,
+        "mean_label": 11.906657133778202,
+        "r2": -0.796969397348978
+      },
+      "linear_regression": {
+        "n": 3147,
+        "mae": 4.306788292049102,
+        "rmse": 7.690368549408692,
+        "signed_error": 0.32126278555263127,
+        "mean_label": 11.906657133778202,
+        "r2": 0.21001521767731568
+      },
+      "gbt": {
+        "n": 3147,
+        "mae": 4.285337554653969,
+        "rmse": 8.070882532227822,
+        "signed_error": 0.42111685999748955,
+        "mean_label": 11.906657133778202,
+        "r2": 0.1299054030002984
+      }
+    },
+    "train_no_gps_jump -> test_no_gps_jump": {
+      "naive_mean": {
+        "n": 2822,
+        "mae": 5.204295095944384,
+        "rmse": 8.023995118491326,
+        "signed_error": 0.31678571016388396,
+        "mean_label": 11.709160170092133,
+        "r2": -0.0015610876831757547
+      },
+      "historical_speed": {
+        "n": 2822,
+        "mae": 5.853409229066854,
+        "rmse": 10.63543588855492,
+        "signed_error": -0.9378053891852678,
+        "mean_label": 11.709160170092133,
+        "r2": -0.7595706913830402
+      },
+      "linear_regression": {
+        "n": 2822,
+        "mae": 4.171360267715489,
+        "rmse": 7.16376385139926,
+        "signed_error": 0.3873271136365967,
+        "mean_label": 11.709160170092133,
+        "r2": 0.2016769774660898
+      },
+      "gbt": {
+        "n": 2822,
+        "mae": 4.162440857623651,
+        "rmse": 7.639853584603635,
+        "signed_error": 0.4813320674174276,
+        "mean_label": 11.709160170092133,
+        "r2": 0.09204107372839021
+      }
+    }
+  },
+  "gbt_feature_importance": {
+    "train_all": {
+      "straight_km": 0.2831,
+      "bearing_deg": 0.289,
+      "hour": 0.2676,
+      "day_of_week": 0.1355,
+      "is_weekend": 0.0109,
+      "is_holiday": 0.0139
+    },
+    "train_no_gps_jump": {
+      "straight_km": 0.2946,
+      "bearing_deg": 0.2529,
+      "hour": 0.3124,
+      "day_of_week": 0.1082,
+      "is_weekend": 0.0188,
+      "is_holiday": 0.0131
+    }
+  },
+  "linear_coefficients_train_all": {
+    "straight_km": 0.59078,
+    "bearing_deg": 0.00166,
+    "hour": 0.09764,
+    "day_of_week": 0.04115,
+    "is_weekend": -1.35738,
+    "is_holiday": -0.7463
+  },
+  "historical_speed_baseline": {
+    "share_test_trips_with_zone_speed": 0.882745471877979,
+    "fallback": "tốc độ toàn thành phố theo giờ × loại ngày (train)"
+  },
+  "params": {
+    "gbt": {
+      "maxIter": 50,
+      "maxDepth": 6,
+      "stepSize": 0.1,
+      "maxBins": 32,
+      "seed": 42
+    },
+    "linear": {
+      "regParam": 0.0,
+      "elasticNetParam": 0.0
+    }
+  },
+  "fit_seconds": {
+    "linear/train_all": 0.6,
+    "gbt/train_all": 7.4,
+    "linear/train_no_gps_jump": 0.1,
+    "gbt/train_no_gps_jump": 6.4
+  },
+  "total_seconds": 20.3
+}

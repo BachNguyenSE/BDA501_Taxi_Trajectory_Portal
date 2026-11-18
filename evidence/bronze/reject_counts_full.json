@@ -1,0 +1,11 @@
+{
+  "mode": "full",
+  "total_rows": 1710670,
+  "by_reason": {
+    "missing_data": 10,
+    "too_few_points": 36508,
+    "too_long": 847,
+    "valid": 1673305
+  },
+  "precedence": "missing_data > bad_json > too_few_points > too_long"
+}

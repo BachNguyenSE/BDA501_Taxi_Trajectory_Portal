@@ -1,0 +1,10 @@
+{
+  "mode": "sample",
+  "total_rows": 17252,
+  "by_reason": {
+    "too_few_points": 346,
+    "too_long": 15,
+    "valid": 16891
+  },
+  "precedence": "missing_data > bad_json > too_few_points > too_long"
+}

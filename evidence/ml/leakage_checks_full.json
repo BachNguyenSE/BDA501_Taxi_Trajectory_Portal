@@ -1,0 +1,35 @@
+{
+  "features": [
+    "straight_km",
+    "bearing_deg",
+    "hour",
+    "day_of_week",
+    "is_weekend",
+    "is_holiday"
+  ],
+  "features_subset_of_allowed": true,
+  "features_contain_forbidden": [],
+  "train_cutoff_local": "2014-05-01",
+  "max_train_start_local": "2014-04-30 23:59:47",
+  "min_test_start_local": "2014-05-01 00:00:52",
+  "max_test_start_local": "2014-06-30 23:59:58",
+  "time_split_ok": true,
+  "trip_uid_in_both_train_and_test": 0,
+  "historical_speed_built_from_segments_before": "2014-04-30 23:59:59",
+  "historical_speed_train_only_ok": true,
+  "hyperparameters_fixed_before_run": {
+    "gbt": {
+      "maxIter": 50,
+      "maxDepth": 6,
+      "stepSize": 0.1,
+      "maxBins": 32,
+      "seed": 42
+    },
+    "linear": {
+      "regParam": 0.0,
+      "elasticNetParam": 0.0
+    }
+  },
+  "test_used_for_tuning": false,
+  "note_filter": "has_gps_jump chỉ dùng để chọn tập (báo cáo có lọc và không lọc), không là feature"
+}

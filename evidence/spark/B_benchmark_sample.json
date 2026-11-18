@@ -1,0 +1,95 @@
+{
+  "runs": {
+    "broadcast": [
+      {
+        "label": "bench-broadcast-0",
+        "seconds": 0.12,
+        "shuffle_read_bytes": 0,
+        "shuffle_write_bytes": 0,
+        "n_stages": 2,
+        "join_in_final_plan": [
+          "BroadcastHashJoin"
+        ]
+      },
+      {
+        "label": "bench-broadcast-1",
+        "seconds": 0.086,
+        "shuffle_read_bytes": 0,
+        "shuffle_write_bytes": 0,
+        "n_stages": 2,
+        "join_in_final_plan": [
+          "BroadcastHashJoin"
+        ]
+      },
+      {
+        "label": "bench-broadcast-2",
+        "seconds": 0.062,
+        "shuffle_read_bytes": 0,
+        "shuffle_write_bytes": 0,
+        "n_stages": 2,
+        "join_in_final_plan": [
+          "BroadcastHashJoin"
+        ]
+      }
+    ],
+    "sort_merge": [
+      {
+        "label": "bench-smj-0",
+        "seconds": 0.166,
+        "shuffle_read_bytes": 1025186,
+        "shuffle_write_bytes": 1025186,
+        "n_stages": 3,
+        "join_in_final_plan": [
+          "SortMergeJoin"
+        ]
+      },
+      {
+        "label": "bench-smj-1",
+        "seconds": 0.104,
+        "shuffle_read_bytes": 1025186,
+        "shuffle_write_bytes": 1025186,
+        "n_stages": 3,
+        "join_in_final_plan": [
+          "SortMergeJoin"
+        ]
+      },
+      {
+        "label": "bench-smj-2",
+        "seconds": 0.076,
+        "shuffle_read_bytes": 1025186,
+        "shuffle_write_bytes": 1025186,
+        "n_stages": 3,
+        "join_in_final_plan": [
+          "SortMergeJoin"
+        ]
+      }
+    ]
+  },
+  "summary": {
+    "broadcast": {
+      "median_seconds": 0.086,
+      "median_shuffle_read_mb": 0.0,
+      "median_shuffle_write_mb": 0.0,
+      "join_types_seen": [
+        "BroadcastHashJoin"
+      ]
+    },
+    "sort_merge": {
+      "median_seconds": 0.104,
+      "median_shuffle_read_mb": 1.025186,
+      "median_shuffle_write_mb": 1.025186,
+      "join_types_seen": [
+        "SortMergeJoin"
+      ]
+    }
+  },
+  "setup": {
+    "query": "SELECT /*+ {hint}(h) */ t.trip_id, t.duration_min, t.straight_km, h.avg_speed_kmh\nFROM trip_features t\nJOIN zone_hour_speed h\n  ON t.origin_zone = h.zone_id AND t.hour = h.hour AND t.is_weekend = h.is_weekend",
+    "sink": "noop",
+    "runs_per_variant": 3,
+    "left_rows": 16891,
+    "right_rows": 23846,
+    "shuffle_partitions": 48,
+    "spark_version": "4.0.1"
+  }
+}

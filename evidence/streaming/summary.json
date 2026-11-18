@@ -1,0 +1,95 @@
+{
+  "kafka_partitions_end_offsets": {
+    "0": 14664,
+    "1": 13596,
+    "2": 14135
+  },
+  "table": [
+    {
+      "item": "Message gửi vào Kafka",
+      "producer_manifest": 42395,
+      "spark_or_mongo": 42395,
+      "source": "offset cuối Kafka (3 partition)"
+    },
+    {
+      "item": "Message Spark đọc (query quality)",
+      "producer_manifest": 42395,
+      "spark_or_mongo": 42395,
+      "source": "stream_quality"
+    },
+    {
+      "item": "Message Spark đọc (query live)",
+      "producer_manifest": 42395,
+      "spark_or_mongo": 42395,
+      "source": "progress"
+    },
+    {
+      "item": "JSON hỏng bắt được",
+      "producer_manifest": 81,
+      "spark_or_mongo": 81,
+      "source": "stream_quality"
+    },
+    {
+      "item": "Bản trùng bị bỏ",
+      "producer_manifest": 413,
+      "spark_or_mongo": 413,
+      "source": "numDroppedDuplicateRows"
+    },
+    {
+      "item": "Bản trễ bị bỏ (watermark)",
+      "producer_manifest": 223,
+      "spark_or_mongo": 208,
+      "source": "numRowsDroppedByWatermark"
+    },
+    {
+      "item": "Đoạn đã tổng hợp",
+      "producer_manifest": 41442,
+      "spark_or_mongo": 41457.0,
+      "source": "tổng n_segments / 3 trong zone_speed_live"
+    }
+  ],
+  "late_not_dropped": 15,
+  "late_not_dropped_that_pass_filter_upper_bound": 15,
+  "aggregated_minus_expected": 15.0,
+  "zone_speed_live": {
+    "docs": 9658,
+    "window_start_min": "2014-05-14 15:50:00",
+    "window_end_max": "2014-05-14 19:10:00"
+  },
+  "quality_batches": 43,
+  "spark": {
+    "ran_seconds": 268.7,
+    "config": {
+      "trigger": "5 seconds",
+      "watermark": "10 minutes",
+      "window": "15 minutes",
+      "slide": "5 minutes",
+      "max_offsets_per_trigger": 5000,
+      "dedup_keys": [
+        "trip_id",
+        "seq"
+      ]
+    }
+  },
+  "live_batches": 47,
+  "manifest_extract": {
+    "window_local": {
+      "start": "2014-05-14 16:00",
+      "end": "2014-05-14 19:00"
+    },
+    "speedup": 60,
+    "fate_counts": {
+      "normal": 41264,
+      "late": 223,
+      "duplicate": 413,
+      "corrupt": 81
+    },
+    "input": {
+      "rows_with_points_in_window": 815,
+      "trip_ids": 815,
+      "trip_ids_shared_by_several_rows": []
+    },
+    "replay_wall_seconds": 210.0,
+    "send_errors": 0
+  }
+}

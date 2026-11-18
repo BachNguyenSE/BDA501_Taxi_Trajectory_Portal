@@ -1,0 +1,388 @@
+===== Q1_congested_zones_peak =====
+SELECT z.zone_id, z.gx, z.gy, round(z.center_lat, 4) AS center_lat, round(z.center_lon, 4) AS center_lon,
+       SUM(h.total_km) / (SUM(h.total_s) / 3600.0) AS speed_kmh,
+       SUM(h.n_segments) AS n_segments
+FROM zone_hour_speed h JOIN zones z ON h.zone_id = z.zone_id
+WHERE h.is_weekend = false AND h.hour IN (8, 9, 17, 18, 19)
+GROUP BY z.zone_id, z.gx, z.gy, z.center_lat, z.center_lon
+HAVING SUM(h.n_segments) >= 1000
+ORDER BY speed_kmh ASC
+LIMIT 10
+
+== Physical Plan ==
+AdaptiveSparkPlan (14)
++- TakeOrderedAndProject (13)
+   +- Filter (12)
+      +- HashAggregate (11)
+         +- Exchange (10)
+            +- HashAggregate (9)
+               +- Project (8)
+                  +- BroadcastHashJoin Inner BuildRight (7)
+                     :- Project (3)
+                     :  +- Filter (2)
+                     :     +- Scan parquet  (1)
+                     +- BroadcastExchange (6)
+                        +- Filter (5)
+                           +- Scan parquet  (4)
+
+
+(1) Scan parquet 
+Output [6]: [zone_id#962, hour#963, is_weekend#964, total_km#965, n_segments#966L, total_s#967L]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/zone_hour_speed]
+PushedFilters: [IsNotNull(is_weekend), Not(EqualTo(is_weekend,true)), In(hour, [17,18,19,8,9]), IsNotNull(zone_id)]
+ReadSchema: struct<zone_id:int,hour:int,is_weekend:boolean,total_km:double,n_segments:bigint,total_s:bigint>
+
+(2) Filter
+Input [6]: [zone_id#962, hour#963, is_weekend#964, total_km#965, n_segments#966L, total_s#967L]
+Condition : (((isnotnull(is_weekend#964) AND NOT is_weekend#964) AND hour#963 IN (8,9,17,18,19)) AND isnotnull(zone_id#962))
+
+(3) Project
+Output [4]: [zone_id#962, total_km#965, n_segments#966L, total_s#967L]
+Input [6]: [zone_id#962, hour#963, is_weekend#964, total_km#965, n_segments#966L, total_s#967L]
+
+(4) Scan parquet 
+Output [5]: [zone_id#599, gx#600, gy#601, center_lon#602, center_lat#603]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/zones]
+PushedFilters: [IsNotNull(zone_id)]
+ReadSchema: struct<zone_id:int,gx:int,gy:int,center_lon:double,center_lat:double>
+
+(5) Filter
+Input [5]: [zone_id#599, gx#600, gy#601, center_lon#602, center_lat#603]
+Condition : isnotnull(zone_id#599)
+
+(6) BroadcastExchange
+Input [5]: [zone_id#599, gx#600, gy#601, center_lon#602, center_lat#603]
+Arguments: HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [plan_id=3203]
+
+(7) BroadcastHashJoin
+Left keys [1]: [zone_id#962]
+Right keys [1]: [zone_id#599]
+Join type: Inner
+Join condition: None
+
+(8) Project
+Output [8]: [total_km#965, n_segments#966L, total_s#967L, zone_id#599, gx#600, gy#601, center_lon#602, center_lat#603]
+Input [9]: [zone_id#962, total_km#965, n_segments#966L, total_s#967L, zone_id#599, gx#600, gy#601, center_lon#602, center_lat#603]
+
+(9) HashAggregate
+Input [8]: [total_km#965, n_segments#966L, total_s#967L, zone_id#599, gx#600, gy#601, center_lon#602, center_lat#603]
+Keys [5]: [zone_id#599, gx#600, gy#601, knownfloatingpointnormalized(normalizenanandzero(center_lat#603)) AS center_lat#603, knownfloatingpointnormalized(normalizenanandzero(center_lon#602)) AS center_lon#602]
+Functions [3]: [partial_sum(total_km#965), partial_sum(total_s#967L), partial_sum(n_segments#966L)]
+Aggregate Attributes [3]: [sum#3035, sum#3036L, sum#3037L]
+Results [8]: [zone_id#599, gx#600, gy#601, center_lat#603, center_lon#602, sum#3038, sum#3039L, sum#3040L]
+
+(10) Exchange
+Input [8]: [zone_id#599, gx#600, gy#601, center_lat#603, center_lon#602, sum#3038, sum#3039L, sum#3040L]
+Arguments: hashpartitioning(zone_id#599, gx#600, gy#601, center_lat#603, center_lon#602, 48), ENSURE_REQUIREMENTS, [plan_id=3208]
+
+(11) HashAggregate
+Input [8]: [zone_id#599, gx#600, gy#601, center_lat#603, center_lon#602, sum#3038, sum#3039L, sum#3040L]
+Keys [5]: [zone_id#599, gx#600, gy#601, center_lat#603, center_lon#602]
+Functions [3]: [sum(total_km#965), sum(total_s#967L), sum(n_segments#966L)]
+Aggregate Attributes [3]: [sum(total_km#965)#3031, sum(total_s#967L)#3032L, sum(n_segments#966L)#3033L]
+Results [7]: [zone_id#599, gx#600, gy#601, round(center_lat#603, 4) AS center_lat#3022, round(center_lon#602, 4) AS center_lon#3023, (sum(total_km#965)#3031 / cast((cast(sum(total_s#967L)#3032L as decimal(20,0)) / 3600.0) as double)) AS speed_kmh#3024, sum(n_segments#966L)#3033L AS n_segments#3025L]
+
+(12) Filter
+Input [7]: [zone_id#599, gx#600, gy#601, center_lat#3022, center_lon#3023, speed_kmh#3024, n_segments#3025L]
+Condition : (isnotnull(n_segments#3025L) AND (n_segments#3025L >= 1000))
+
+(13) TakeOrderedAndProject
+Input [7]: [zone_id#599, gx#600, gy#601, center_lat#3022, center_lon#3023, speed_kmh#3024, n_segments#3025L]
+Arguments: 10, [speed_kmh#3024 ASC NULLS FIRST], [zone_id#599, gx#600, gy#601, center_lat#3022, center_lon#3023, speed_kmh#3024, n_segments#3025L]
+
+(14) AdaptiveSparkPlan
+Output [7]: [zone_id#599, gx#600, gy#601, center_lat#3022, center_lon#3023, speed_kmh#3024, n_segments#3025L]
+Arguments: isFinalPlan=false
+
+
+
+===== Q2_speed_by_hour =====
+SELECT hour, is_weekend,
+       SUM(total_km) / (SUM(total_s) / 3600.0) AS speed_kmh,
+       SUM(n_segments) AS n_segments
+FROM zone_hour_speed
+GROUP BY hour, is_weekend
+ORDER BY is_weekend, hour
+
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- Sort (6)
+   +- Exchange (5)
+      +- HashAggregate (4)
+         +- Exchange (3)
+            +- HashAggregate (2)
+               +- Scan parquet  (1)
+
+
+(1) Scan parquet 
+Output [5]: [hour#963, is_weekend#964, total_km#965, n_segments#966L, total_s#967L]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/zone_hour_speed]
+ReadSchema: struct<hour:int,is_weekend:boolean,total_km:double,n_segments:bigint,total_s:bigint>
+
+(2) HashAggregate
+Input [5]: [hour#963, is_weekend#964, total_km#965, n_segments#966L, total_s#967L]
+Keys [2]: [hour#963, is_weekend#964]
+Functions [3]: [partial_sum(total_km#965), partial_sum(total_s#967L), partial_sum(n_segments#966L)]
+Aggregate Attributes [3]: [sum#3074, sum#3075L, sum#3076L]
+Results [5]: [hour#963, is_weekend#964, sum#3077, sum#3078L, sum#3079L]
+
+(3) Exchange
+Input [5]: [hour#963, is_weekend#964, sum#3077, sum#3078L, sum#3079L]
+Arguments: hashpartitioning(hour#963, is_weekend#964, 48), ENSURE_REQUIREMENTS, [plan_id=3320]
+
+(4) HashAggregate
+Input [5]: [hour#963, is_weekend#964, sum#3077, sum#3078L, sum#3079L]
+Keys [2]: [hour#963, is_weekend#964]
+Functions [3]: [sum(total_km#965), sum(total_s#967L), sum(n_segments#966L)]
+Aggregate Attributes [3]: [sum(total_km#965)#3071, sum(total_s#967L)#3072L, sum(n_segments#966L)#3073L]
+Results [4]: [hour#963, is_weekend#964, (sum(total_km#965)#3071 / cast((cast(sum(total_s#967L)#3072L as decimal(20,0)) / 3600.0) as double)) AS speed_kmh#3064, sum(n_segments#966L)#3073L AS n_segments#3065L]
+
+(5) Exchange
+Input [4]: [hour#963, is_weekend#964, speed_kmh#3064, n_segments#3065L]
+Arguments: rangepartitioning(is_weekend#964 ASC NULLS FIRST, hour#963 ASC NULLS FIRST, 48), ENSURE_REQUIREMENTS, [plan_id=3323]
+
+(6) Sort
+Input [4]: [hour#963, is_weekend#964, speed_kmh#3064, n_segments#3065L]
+Arguments: [is_weekend#964 ASC NULLS FIRST, hour#963 ASC NULLS FIRST], true, 0
+
+(7) AdaptiveSparkPlan
+Output [4]: [hour#963, is_weekend#964, speed_kmh#3064, n_segments#3065L]
+Arguments: isFinalPlan=false
+
+
+
+===== Q3_trip_join_origin_zone_hour =====
+SELECT floor(h.avg_speed_kmh / 5) * 5 AS origin_speed_bin_kmh,
+       COUNT(*) AS n_trips,
+       SUM(t.duration_min) / SUM(t.straight_km) AS min_per_straight_km,
+       AVG(t.duration_min) AS avg_duration_min
+FROM trip_features t
+JOIN zone_hour_speed h
+  ON t.origin_zone = h.zone_id AND t.hour = h.hour AND t.is_weekend = h.is_weekend
+WHERE t.split = 'train'
+GROUP BY floor(h.avg_speed_kmh / 5) * 5
+ORDER BY origin_speed_bin_kmh
+
+== Physical Plan ==
+AdaptiveSparkPlan (14)
++- Sort (13)
+   +- Exchange (12)
+      +- HashAggregate (11)
+         +- Exchange (10)
+            +- HashAggregate (9)
+               +- Project (8)
+                  +- BroadcastHashJoin Inner BuildRight (7)
+                     :- Project (3)
+                     :  +- Filter (2)
+                     :     +- Scan parquet  (1)
+                     +- BroadcastExchange (6)
+                        +- Filter (5)
+                           +- Scan parquet  (4)
+
+
+(1) Scan parquet 
+Output [6]: [straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358, split#1360]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/trip_features]
+PushedFilters: [IsNotNull(split), EqualTo(split,train), IsNotNull(origin_zone), IsNotNull(hour), IsNotNull(is_weekend)]
+ReadSchema: struct<straight_km:double,hour:int,is_weekend:boolean,origin_zone:int,duration_min:double,split:string>
+
+(2) Filter
+Input [6]: [straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358, split#1360]
+Condition : ((((isnotnull(split#1360) AND (split#1360 = train)) AND isnotnull(origin_zone#1356)) AND isnotnull(hour#1351)) AND isnotnull(is_weekend#1353))
+
+(3) Project
+Output [5]: [straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Input [6]: [straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358, split#1360]
+
+(4) Scan parquet 
+Output [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/zone_hour_speed]
+PushedFilters: [IsNotNull(zone_id), IsNotNull(hour), IsNotNull(is_weekend)]
+ReadSchema: struct<zone_id:int,hour:int,is_weekend:boolean,avg_speed_kmh:double>
+
+(5) Filter
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Condition : ((isnotnull(zone_id#962) AND isnotnull(hour#963)) AND isnotnull(is_weekend#964))
+
+(6) BroadcastExchange
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Arguments: HashedRelationBroadcastMode(List(input[0, int, false], input[1, int, false], input[2, boolean, false]),false), [plan_id=3577]
+
+(7) BroadcastHashJoin
+Left keys [3]: [origin_zone#1356, hour#1351, is_weekend#1353]
+Right keys [3]: [zone_id#962, hour#963, is_weekend#964]
+Join type: Inner
+Join condition: None
+
+(8) Project
+Output [3]: [straight_km#1349, duration_min#1358, (FLOOR((avg_speed_kmh#968 / 5.0)) * 5) AS _groupingexpression#3132L]
+Input [9]: [straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358, zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+
+(9) HashAggregate
+Input [3]: [straight_km#1349, duration_min#1358, _groupingexpression#3132L]
+Keys [1]: [_groupingexpression#3132L]
+Functions [4]: [partial_count(1), partial_sum(duration_min#1358), partial_sum(straight_km#1349), partial_avg(duration_min#1358)]
+Aggregate Attributes [5]: [count#3133L, sum#3134, sum#3135, sum#3136, count#3137L]
+Results [6]: [_groupingexpression#3132L, count#3138L, sum#3139, sum#3140, sum#3141, count#3142L]
+
+(10) Exchange
+Input [6]: [_groupingexpression#3132L, count#3138L, sum#3139, sum#3140, sum#3141, count#3142L]
+Arguments: hashpartitioning(_groupingexpression#3132L, 48), ENSURE_REQUIREMENTS, [plan_id=3582]
+
+(11) HashAggregate
+Input [6]: [_groupingexpression#3132L, count#3138L, sum#3139, sum#3140, sum#3141, count#3142L]
+Keys [1]: [_groupingexpression#3132L]
+Functions [4]: [count(1), sum(duration_min#1358), sum(straight_km#1349), avg(duration_min#1358)]
+Aggregate Attributes [4]: [count(1)#3128L, sum(duration_min#1358)#3129, sum(straight_km#1349)#3130, avg(duration_min#1358)#3131]
+Results [4]: [_groupingexpression#3132L AS origin_speed_bin_kmh#3119L, count(1)#3128L AS n_trips#3120L, (sum(duration_min#1358)#3129 / sum(straight_km#1349)#3130) AS min_per_straight_km#3121, avg(duration_min#1358)#3131 AS avg_duration_min#3122]
+
+(12) Exchange
+Input [4]: [origin_speed_bin_kmh#3119L, n_trips#3120L, min_per_straight_km#3121, avg_duration_min#3122]
+Arguments: rangepartitioning(origin_speed_bin_kmh#3119L ASC NULLS FIRST, 48), ENSURE_REQUIREMENTS, [plan_id=3585]
+
+(13) Sort
+Input [4]: [origin_speed_bin_kmh#3119L, n_trips#3120L, min_per_straight_km#3121, avg_duration_min#3122]
+Arguments: [origin_speed_bin_kmh#3119L ASC NULLS FIRST], true, 0
+
+(14) AdaptiveSparkPlan
+Output [4]: [origin_speed_bin_kmh#3119L, n_trips#3120L, min_per_straight_km#3121, avg_duration_min#3122]
+Arguments: isFinalPlan=false
+
+
+
+===== JOIN_BENCH hint=BROADCAST =====
+SELECT /*+ BROADCAST(h) */ t.trip_id, t.duration_min, t.straight_km, h.avg_speed_kmh
+FROM trip_features t
+JOIN zone_hour_speed h
+  ON t.origin_zone = h.zone_id AND t.hour = h.hour AND t.is_weekend = h.is_weekend
+
+== Physical Plan ==
+AdaptiveSparkPlan (8)
++- Project (7)
+   +- BroadcastHashJoin Inner BuildRight (6)
+      :- Filter (2)
+      :  +- Scan parquet  (1)
+      +- BroadcastExchange (5)
+         +- Filter (4)
+            +- Scan parquet  (3)
+
+
+(1) Scan parquet 
+Output [6]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/trip_features]
+PushedFilters: [IsNotNull(origin_zone), IsNotNull(hour), IsNotNull(is_weekend)]
+ReadSchema: struct<trip_id:string,straight_km:double,hour:int,is_weekend:boolean,origin_zone:int,duration_min:double>
+
+(2) Filter
+Input [6]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Condition : ((isnotnull(origin_zone#1356) AND isnotnull(hour#1351)) AND isnotnull(is_weekend#1353))
+
+(3) Scan parquet 
+Output [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/zone_hour_speed]
+PushedFilters: [IsNotNull(zone_id), IsNotNull(hour), IsNotNull(is_weekend)]
+ReadSchema: struct<zone_id:int,hour:int,is_weekend:boolean,avg_speed_kmh:double>
+
+(4) Filter
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Condition : ((isnotnull(zone_id#962) AND isnotnull(hour#963)) AND isnotnull(is_weekend#964))
+
+(5) BroadcastExchange
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Arguments: HashedRelationBroadcastMode(List(input[0, int, false], input[1, int, false], input[2, boolean, false]),false), [plan_id=3622]
+
+(6) BroadcastHashJoin
+Left keys [3]: [origin_zone#1356, hour#1351, is_weekend#1353]
+Right keys [3]: [zone_id#962, hour#963, is_weekend#964]
+Join type: Inner
+Join condition: None
+
+(7) Project
+Output [4]: [trip_id#1336, duration_min#1358, straight_km#1349, avg_speed_kmh#968]
+Input [10]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358, zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+
+(8) AdaptiveSparkPlan
+Output [4]: [trip_id#1336, duration_min#1358, straight_km#1349, avg_speed_kmh#968]
+Arguments: isFinalPlan=false
+
+
+
+===== JOIN_BENCH hint=MERGE =====
+SELECT /*+ MERGE(h) */ t.trip_id, t.duration_min, t.straight_km, h.avg_speed_kmh
+FROM trip_features t
+JOIN zone_hour_speed h
+  ON t.origin_zone = h.zone_id AND t.hour = h.hour AND t.is_weekend = h.is_weekend
+
+== Physical Plan ==
+AdaptiveSparkPlan (11)
++- Project (10)
+   +- SortMergeJoin Inner (9)
+      :- Sort (4)
+      :  +- Exchange (3)
+      :     +- Filter (2)
+      :        +- Scan parquet  (1)
+      +- Sort (8)
+         +- Exchange (7)
+            +- Filter (6)
+               +- Scan parquet  (5)
+
+
+(1) Scan parquet 
+Output [6]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/trip_features]
+PushedFilters: [IsNotNull(origin_zone), IsNotNull(hour), IsNotNull(is_weekend)]
+ReadSchema: struct<trip_id:string,straight_km:double,hour:int,is_weekend:boolean,origin_zone:int,duration_min:double>
+
+(2) Filter
+Input [6]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Condition : ((isnotnull(origin_zone#1356) AND isnotnull(hour#1351)) AND isnotnull(is_weekend#1353))
+
+(3) Exchange
+Input [6]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Arguments: hashpartitioning(origin_zone#1356, hour#1351, is_weekend#1353, 48), ENSURE_REQUIREMENTS, [plan_id=3661]
+
+(4) Sort
+Input [6]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358]
+Arguments: [origin_zone#1356 ASC NULLS FIRST, hour#1351 ASC NULLS FIRST, is_weekend#1353 ASC NULLS FIRST], false, 0
+
+(5) Scan parquet 
+Output [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Batched: true
+Location: InMemoryFileIndex [file:/workspace/data/gold/zone_hour_speed]
+PushedFilters: [IsNotNull(zone_id), IsNotNull(hour), IsNotNull(is_weekend)]
+ReadSchema: struct<zone_id:int,hour:int,is_weekend:boolean,avg_speed_kmh:double>
+
+(6) Filter
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Condition : ((isnotnull(zone_id#962) AND isnotnull(hour#963)) AND isnotnull(is_weekend#964))
+
+(7) Exchange
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Arguments: hashpartitioning(zone_id#962, hour#963, is_weekend#964, 48), ENSURE_REQUIREMENTS, [plan_id=3662]
+
+(8) Sort
+Input [4]: [zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+Arguments: [zone_id#962 ASC NULLS FIRST, hour#963 ASC NULLS FIRST, is_weekend#964 ASC NULLS FIRST], false, 0
+
+(9) SortMergeJoin
+Left keys [3]: [origin_zone#1356, hour#1351, is_weekend#1353]
+Right keys [3]: [zone_id#962, hour#963, is_weekend#964]
+Join type: Inner
+Join condition: None
+
+(10) Project
+Output [4]: [trip_id#1336, duration_min#1358, straight_km#1349, avg_speed_kmh#968]
+Input [10]: [trip_id#1336, straight_km#1349, hour#1351, is_weekend#1353, origin_zone#1356, duration_min#1358, zone_id#962, hour#963, is_weekend#964, avg_speed_kmh#968]
+
+(11) AdaptiveSparkPlan
+Output [4]: [trip_id#1336, duration_min#1358, straight_km#1349, avg_speed_kmh#968]
+Arguments: isFinalPlan=false
+

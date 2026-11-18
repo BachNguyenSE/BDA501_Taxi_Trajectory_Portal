@@ -1,0 +1,24 @@
+# Dữ liệu và sản phẩm sinh ra: không commit (repo nên nhẹ hơn ~10 MB)
+data/raw/train.csv
+data/bronze/
+data/silver/
+data/gold/
+data/curated/
+data/.spark_tmp/
+checkpoints/*
+!checkpoints/.gitkeep
+models/*
+!models/.gitkeep
+.ivy2/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# holidays.csv nhỏ, được commit
+data/sample/
+# sinh ra khi chạy, tái tạo được bằng script
+data/mr/
+data/stream/
+data/sample/
+.vscode/*.log

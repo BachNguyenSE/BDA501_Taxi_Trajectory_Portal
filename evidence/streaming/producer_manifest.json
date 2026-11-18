@@ -1,0 +1,44 @@
+{
+  "original_messages": 41981,
+  "fate_counts": {
+    "normal": 41264,
+    "late": 223,
+    "duplicate": 413,
+    "corrupt": 81
+  },
+  "messages_sent_total": 42395,
+  "corrupt_json_sent": 81,
+  "late_sent": 223,
+  "duplicate_copies_sent": 413,
+  "sentinel_sent": 1,
+  "expected": {
+    "segments_aggregated_if_all_late_dropped": 41442,
+    "late_messages_that_would_pass_filter": 222,
+    "valid_json_messages": 42314
+  },
+  "rates_config": {
+    "duplicate_rate": 0.01,
+    "late_rate": 0.005,
+    "late_delay_min": 30,
+    "corrupt_json_rate": 0.002
+  },
+  "seed": 42,
+  "late_delay_s": 1800,
+  "window_local": {
+    "start": "2014-05-14 16:00",
+    "end": "2014-05-14 19:00"
+  },
+  "input": {
+    "rows_with_points_in_window": 815,
+    "trip_ids": 815,
+    "trip_ids_shared_by_several_rows": []
+  },
+  "speedup": 60,
+  "topic": "gps-segments",
+  "key": "TAXI_ID",
+  "acks": "all",
+  "load_seconds": 8.6,
+  "messages_handed_to_kafka": 42395,
+  "send_errors": 0,
+  "replay_wall_seconds": 210.0
+}

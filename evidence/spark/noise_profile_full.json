@@ -1,0 +1,75 @@
+{
+  "trips": 1673303,
+  "duplicate_trip_id_rows": 9,
+  "duplicate_trip_uid_rows": 0,
+  "n_jumps_distribution": {
+    "0": 1498872,
+    "1": 159492,
+    "2-5": 13729,
+    ">5": 1210
+  },
+  "jump_vs_no_jump": [
+    {
+      "has_gps_jump": false,
+      "n": 1498872,
+      "p50_duration_min": 10.25,
+      "p50_straight_km": 2.5295782648013176,
+      "p50_min_per_km": 3.7832229940695137
+    },
+    {
+      "has_gps_jump": true,
+      "n": 174431,
+      "p50_duration_min": 10.75,
+      "p50_straight_km": 3.2587185185669565,
+      "p50_min_per_km": 3.0427568487990984
+    }
+  ],
+  "straight_km_quantiles": {
+    "p01": 0.01746678397573536,
+    "p05": 0.5237676523796857,
+    "p50": 2.6064902517008908,
+    "p95": 8.95925971088369,
+    "p99": 12.100643394098956
+  },
+  "straight_km_below": {
+    "0.05": 25473,
+    "0.1": 32649,
+    "0.2": 43850,
+    "0.5": 79894
+  },
+  "straight_speed_kmh_quantiles": {
+    "p01": 0.1559095818143095,
+    "p05": 3.851737954466685,
+    "p50": 16.20082242899925,
+    "p95": 37.26531034949386,
+    "p99": 50.81384182029745
+  },
+  "straight_speed_kmh_below": {
+    "1": 38802,
+    "2": 53301,
+    "5": 109931
+  },
+  "straight_speed_kmh_above": {
+    "80": 3610,
+    "100": 2121,
+    "150": 988
+  },
+  "duration_min_below": {
+    "0.5": 7394,
+    "1": 15593,
+    "2": 28773
+  },
+  "origin_outside_bbox": 1230,
+  "dest_outside_bbox": 9481,
+  "either_outside_bbox": 10095,
+  "split_counts": {
+    "test": 308543,
+    "out_of_range": 124,
+    "train": 1364636
+  },
+  "split_counts_with_jump": {
+    "test": 30486,
+    "train": 143936,
+    "out_of_range": 9
+  }
+}

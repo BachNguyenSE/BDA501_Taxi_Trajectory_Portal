@@ -1,0 +1,132 @@
+{
+  "sql": "SELECT floor(h.avg_speed_kmh / 5) * 5 AS origin_speed_bin_kmh,\n       COUNT(*) AS n_trips,\n       SUM(t.duration_min) / SUM(t.straight_km) AS min_per_straight_km,\n       AVG(t.duration_min) AS avg_duration_min\nFROM trip_features t\nJOIN zone_hour_speed h\n  ON t.origin_zone = h.zone_id AND t.hour = h.hour AND t.is_weekend = h.is_weekend\nWHERE t.split = 'train'\nGROUP BY floor(h.avg_speed_kmh / 5) * 5\nORDER BY origin_speed_bin_kmh",
+  "seconds": 0.18,
+  "rows": [
+    {
+      "origin_speed_bin_kmh": 0,
+      "n_trips": 46,
+      "min_per_straight_km": 3.763099672025269,
+      "avg_duration_min": 14.233695652173912
+    },
+    {
+      "origin_speed_bin_kmh": 5,
+      "n_trips": 535,
+      "min_per_straight_km": 4.660059880064641,
+      "avg_duration_min": 15.303271028037383
+    },
+    {
+      "origin_speed_bin_kmh": 10,
+      "n_trips": 3697,
+      "min_per_straight_km": 3.862768680909109,
+      "avg_duration_min": 12.44779550987287
+    },
+    {
+      "origin_speed_bin_kmh": 15,
+      "n_trips": 4252,
+      "min_per_straight_km": 3.4840625783005716,
+      "avg_duration_min": 11.946378174976482
+    },
+    {
+      "origin_speed_bin_kmh": 20,
+      "n_trips": 2246,
+      "min_per_straight_km": 3.524160301773955,
+      "avg_duration_min": 11.488869100623331
+    },
+    {
+      "origin_speed_bin_kmh": 25,
+      "n_trips": 1132,
+      "min_per_straight_km": 3.149218490829932,
+      "avg_duration_min": 11.975485865724382
+    },
+    {
+      "origin_speed_bin_kmh": 30,
+      "n_trips": 627,
+      "min_per_straight_km": 3.3026997839752585,
+      "avg_duration_min": 11.971291866028707
+    },
+    {
+      "origin_speed_bin_kmh": 35,
+      "n_trips": 394,
+      "min_per_straight_km": 3.1306575196993376,
+      "avg_duration_min": 11.689086294416244
+    },
+    {
+      "origin_speed_bin_kmh": 40,
+      "n_trips": 225,
+      "min_per_straight_km": 3.448536339523895,
+      "avg_duration_min": 11.488888888888889
+    },
+    {
+      "origin_speed_bin_kmh": 45,
+      "n_trips": 183,
+      "min_per_straight_km": 3.3283186401743268,
+      "avg_duration_min": 11.077868852459016
+    },
+    {
+      "origin_speed_bin_kmh": 50,
+      "n_trips": 157,
+      "min_per_straight_km": 3.573252233038127,
+      "avg_duration_min": 11.718152866242038
+    },
+    {
+      "origin_speed_bin_kmh": 55,
+      "n_trips": 93,
+      "min_per_straight_km": 3.5213517495876263,
+      "avg_duration_min": 12.728494623655914
+    },
+    {
+      "origin_speed_bin_kmh": 60,
+      "n_trips": 41,
+      "min_per_straight_km": 3.1692341135052167,
+      "avg_duration_min": 13.603658536585366
+    },
+    {
+      "origin_speed_bin_kmh": 65,
+      "n_trips": 37,
+      "min_per_straight_km": 3.459010234705975,
+      "avg_duration_min": 11.371621621621621
+    },
+    {
+      "origin_speed_bin_kmh": 70,
+      "n_trips": 22,
+      "min_per_straight_km": 2.917541142938804,
+      "avg_duration_min": 12.75
+    },
+    {
+      "origin_speed_bin_kmh": 75,
+      "n_trips": 23,
+      "min_per_straight_km": 3.72052910692532,
+      "avg_duration_min": 11.391304347826088
+    },
+    {
+      "origin_speed_bin_kmh": 80,
+      "n_trips": 7,
+      "min_per_straight_km": 3.2568539496311915,
+      "avg_duration_min": 17.714285714285715
+    },
+    {
+      "origin_speed_bin_kmh": 85,
+      "n_trips": 2,
+      "min_per_straight_km": 1.8318607118036871,
+      "avg_duration_min": 7.875
+    },
+    {
+      "origin_speed_bin_kmh": 90,
+      "n_trips": 4,
+      "min_per_straight_km": 1.5284577776939448,
+      "avg_duration_min": 7.8125
+    },
+    {
+      "origin_speed_bin_kmh": 95,
+      "n_trips": 1,
+      "min_per_straight_km": 0.582412482846339,
+      "avg_duration_min": 1.75
+    },
+    {
+      "origin_speed_bin_kmh": 100,
+      "n_trips": 1,
+      "min_per_straight_km": 2.6125692251263724,
+      "avg_duration_min": 19.25
+    }
+  ]
+}

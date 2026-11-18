@@ -1,0 +1,97 @@
+{
+  "mode": "sample",
+  "input": "data/sample/raw/train_sample.csv",
+  "tolerance_km_per_segment": 1e-06,
+  "vs_spark_same_logic_as_mr": {
+    "keys_mr": 16059,
+    "keys_spark": 16059,
+    "keys_only_in_mr": 0,
+    "keys_only_in_spark": 0,
+    "keys_n_segments_differ": 0,
+    "keys_km_over_tolerance": 0,
+    "max_abs_km_diff": 1.7053025658242404e-13,
+    "max_km_diff_over_tolerance_ratio": 2.7974123455122053e-10,
+    "total_segments_mr": 929255,
+    "total_segments_spark": 929255,
+    "total_km_mr": 105611.45813504375,
+    "total_km_spark": 105611.45813504377,
+    "keys_failing_any_check": 0,
+    "examples_failing": []
+  },
+  "vs_spark_silver_dedup": {
+    "keys_mr": 16059,
+    "keys_spark": 16059,
+    "keys_only_in_mr": 0,
+    "keys_only_in_spark": 0,
+    "keys_n_segments_differ": 0,
+    "keys_km_over_tolerance": 0,
+    "max_abs_km_diff": 1.7053025658242404e-13,
+    "max_km_diff_over_tolerance_ratio": 2.7974123455122053e-10,
+    "total_segments_mr": 929255,
+    "total_segments_spark": 929255,
+    "total_km_mr": 105611.45813504375,
+    "total_km_spark": 105611.45813504377,
+    "keys_failing_any_check": 0,
+    "examples_failing": []
+  },
+  "duplicate_rows_counted_by_mr_only": {
+    "sum((w - 1))": 0
+  },
+  "counter_check_vs_bronze": {
+    "missing_data": {
+      "mapreduce": 0,
+      "spark_bronze": 0,
+      "match": true
+    },
+    "bad_json": {
+      "mapreduce": 0,
+      "spark_bronze": 0,
+      "match": true
+    },
+    "too_few_points": {
+      "mapreduce": 328,
+      "spark_bronze": 328,
+      "match": true
+    },
+    "too_long": {
+      "mapreduce": 11,
+      "spark_bronze": 11,
+      "match": true
+    },
+    "valid": {
+      "mapreduce": 19661,
+      "spark_bronze": 19661,
+      "match": true
+    }
+  },
+  "job_counters": {
+    "Launched map tasks": 2,
+    "Launched reduce tasks": 2,
+    "Map input records": 20001,
+    "Map output records": 929255,
+    "Combine input records": 929255,
+    "Combine output records": 25548,
+    "Reduce input records": 25548,
+    "Reduce output records": 16059,
+    "Reduce shuffle bytes": 882932,
+    "HDFS: Number of bytes read": 22777064,
+    "rows": 20000,
+    "header": 1,
+    "valid_trips": 19661,
+    "pairs_out_bbox": 11801,
+    "pairs_fast_in_bbox": 5081,
+    "segments_emitted": 929255,
+    "bad_csv": 0
+  },
+  "yarn_app": {
+    "id": "application_1795028238930_0001",
+    "name": "porto-zone-hour-sample",
+    "state": "FINISHED",
+    "finalStatus": "SUCCEEDED",
+    "elapsedTime": 22435,
+    "allocatedMB": 512
+  },
+  "wall": {
+    "wall_seconds_submit_to_finish": 28
+  }
+}

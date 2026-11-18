@@ -1,0 +1,282 @@
+[
+  {
+    "trip_uid": "1399135956620000324-e9f400b4cb4a",
+    "start_local": "2014-05-03 17:52:36",
+    "origin": [
+      41.146569,
+      -8.611317
+    ],
+    "destination": [
+      41.150781,
+      -8.59869
+    ],
+    "straight_km": 1.156,
+    "actual_duration_min": 7.75
+  },
+  {
+    "trip_uid": "1399217372620000084-820bb2161ff4",
+    "start_local": "2014-05-04 16:29:32",
+    "origin": [
+      41.140503,
+      -8.613144
+    ],
+    "destination": [
+      41.23674,
+      -8.669871
+    ],
+    "straight_km": 11.707,
+    "actual_duration_min": 32.75
+  },
+  {
+    "trip_uid": "1399226240620000009-fe2e6f520dca",
+    "start_local": "2014-05-04 18:57:20",
+    "origin": [
+      41.182713,
+      -8.600013
+    ],
+    "destination": [
+      41.1921,
+      -8.606916
+    ],
+    "straight_km": 1.193,
+    "actual_duration_min": 4.5
+  },
+  {
+    "trip_uid": "1399436669620000345-c751f9d2e6cb",
+    "start_local": "2014-05-07 05:24:29",
+    "origin": [
+      41.184234,
+      -8.600112
+    ],
+    "destination": [
+      41.22576,
+      -8.681499
+    ],
+    "straight_km": 8.227,
+    "actual_duration_min": 19.75
+  },
+  {
+    "trip_uid": "1399459583620000314-6878bf927544",
+    "start_local": "2014-05-07 11:46:23",
+    "origin": [
+      41.161023,
+      -8.659728
+    ],
+    "destination": [
+      41.236902,
+      -8.670087
+    ],
+    "straight_km": 8.482,
+    "actual_duration_min": 16.0
+  },
+  {
+    "trip_uid": "1399923831620000157-3f2fc0c35709",
+    "start_local": "2014-05-12 20:43:51",
+    "origin": [
+      41.16051,
+      -8.644194
+    ],
+    "destination": [
+      41.177772,
+      -8.691363
+    ],
+    "straight_km": 4.39,
+    "actual_duration_min": 14.25
+  },
+  {
+    "trip_uid": "1400792965620000280-8b3e51e6e080",
+    "start_local": "2014-05-22 22:09:25",
+    "origin": [
+      41.154462,
+      -8.613225
+    ],
+    "destination": [
+      41.160663,
+      -8.604414
+    ],
+    "straight_km": 1.01,
+    "actual_duration_min": 4.0
+  },
+  {
+    "trip_uid": "1401008173620000672-5185d048f01b",
+    "start_local": "2014-05-25 09:56:13",
+    "origin": [
+      41.148027,
+      -8.619903
+    ],
+    "destination": [
+      41.148927,
+      -8.585649
+    ],
+    "straight_km": 2.87,
+    "actual_duration_min": 16.0
+  },
+  {
+    "trip_uid": "1402051073620000276-f93f8f781123",
+    "start_local": "2014-06-06 11:37:53",
+    "origin": [
+      41.172039,
+      -8.599014
+    ],
+    "destination": [
+      41.166783,
+      -8.566659
+    ],
+    "straight_km": 2.771,
+    "actual_duration_min": 12.25
+  },
+  {
+    "trip_uid": "1402072726620000370-54d3a94ae5fe",
+    "start_local": "2014-06-06 17:38:46",
+    "origin": [
+      41.153913,
+      -8.674074
+    ],
+    "destination": [
+      41.145921,
+      -8.612577
+    ],
+    "straight_km": 5.225,
+    "actual_duration_min": 21.25
+  },
+  {
+    "trip_uid": "1402263306620000508-5592c05ac9a3",
+    "start_local": "2014-06-08 22:35:06",
+    "origin": [
+      41.149242,
+      -8.59932
+    ],
+    "destination": [
+      41.179356,
+      -8.624799
+    ],
+    "straight_km": 3.97,
+    "actual_duration_min": 14.0
+  },
+  {
+    "trip_uid": "1402400812620000486-ca45a182c757",
+    "start_local": "2014-06-10 12:46:52",
+    "origin": [
+      41.144742,
+      -8.606439
+    ],
+    "destination": [
+      41.161257,
+      -8.596575
+    ],
+    "straight_km": 2.014,
+    "actual_duration_min": 9.5
+  },
+  {
+    "trip_uid": "1402634695620000574-f89dbc9ce7f8",
+    "start_local": "2014-06-13 05:44:55",
+    "origin": [
+      41.155776,
+      -8.602533
+    ],
+    "destination": [
+      41.182785,
+      -8.598699
+    ],
+    "straight_km": 3.02,
+    "actual_duration_min": 10.25
+  },
+  {
+    "trip_uid": "1402794617620000351-cc61b9630341",
+    "start_local": "2014-06-15 02:10:17",
+    "origin": [
+      41.145597,
+      -8.610894
+    ],
+    "destination": [
+      41.166657,
+      -8.566497
+    ],
+    "straight_km": 4.393,
+    "actual_duration_min": 8.25
+  },
+  {
+    "trip_uid": "1402913747620000112-b34a7c8b19a9",
+    "start_local": "2014-06-16 11:15:47",
+    "origin": [
+      41.159529,
+      -8.575749
+    ],
+    "destination": [
+      41.173497,
+      -8.653284
+    ],
+    "straight_km": 6.674,
+    "actual_duration_min": 14.5
+  },
+  {
+    "trip_uid": "1402926001620000331-ff52615368d3",
+    "start_local": "2014-06-16 14:40:01",
+    "origin": [
+      41.156298,
+      -8.681247
+    ],
+    "destination": [
+      41.152257,
+      -8.60706
+    ],
+    "straight_km": 6.227,
+    "actual_duration_min": 17.25
+  },
+  {
+    "trip_uid": "1403214774620000328-f4108ab2a852",
+    "start_local": "2014-06-19 22:52:54",
+    "origin": [
+      41.148558,
+      -8.585649
+    ],
+    "destination": [
+      41.160042,
+      -8.640603
+    ],
+    "straight_km": 4.775,
+    "actual_duration_min": 11.5
+  },
+  {
+    "trip_uid": "1403580092620000503-fed30b986eb1",
+    "start_local": "2014-06-24 04:21:32",
+    "origin": [
+      41.147235,
+      -8.615349
+    ],
+    "destination": [
+      41.176359,
+      -8.587701
+    ],
+    "straight_km": 3.981,
+    "actual_duration_min": 9.5
+  },
+  {
+    "trip_uid": "1403766605620000281-0a157e03970e",
+    "start_local": "2014-06-26 08:10:05",
+    "origin": [
+      41.148558,
+      -8.585631
+    ],
+    "destination": [
+      41.157378,
+      -8.666856
+    ],
+    "straight_km": 6.871,
+    "actual_duration_min": 14.75
+  },
+  {
+    "trip_uid": "1403958872620000456-ea4f40badea2",
+    "start_local": "2014-06-28 13:34:32",
+    "origin": [
+      41.145651,
+      -8.61084
+    ],
+    "destination": [
+      41.098149,
+      -8.56269
+    ],
+    "straight_km": 6.646,
+    "actual_duration_min": 28.25
+  }
+]

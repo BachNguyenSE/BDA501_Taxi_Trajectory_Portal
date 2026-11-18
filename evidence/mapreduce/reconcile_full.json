@@ -1,0 +1,110 @@
+{
+  "mode": "full",
+  "input": "data/raw/train.csv",
+  "tolerance_km_per_segment": 1e-06,
+  "vs_spark_same_logic_as_mr": {
+    "keys_mr": 40548,
+    "keys_spark": 40548,
+    "keys_only_in_mr": 0,
+    "keys_only_in_spark": 0,
+    "keys_n_segments_differ": 0,
+    "keys_km_over_tolerance": 0,
+    "max_abs_km_diff": 9.094947017729282e-12,
+    "max_km_diff_over_tolerance_ratio": 3.2928845104016233e-10,
+    "total_segments_mr": 79502909,
+    "total_segments_spark": 79502909,
+    "total_km_mr": 8812578.43247579,
+    "total_km_spark": 8812578.43247579,
+    "keys_failing_any_check": 0,
+    "examples_failing": []
+  },
+  "vs_spark_silver_dedup": {
+    "keys_mr": 40548,
+    "keys_spark": 40548,
+    "keys_only_in_mr": 0,
+    "keys_only_in_spark": 0,
+    "keys_n_segments_differ": 1,
+    "keys_km_over_tolerance": 1,
+    "max_abs_km_diff": 0.5707510738252495,
+    "max_km_diff_over_tolerance_ratio": 64.88019481928492,
+    "total_segments_mr": 79502909,
+    "total_segments_spark": 79502899,
+    "total_km_mr": 8812578.43247579,
+    "total_km_spark": 8812577.86172472,
+    "keys_failing_any_check": 1,
+    "examples_failing": [
+      {
+        "zone_id": 1576,
+        "hour": 0,
+        "mr_km": 1144.7114880159154,
+        "sp_km": 1144.1407369420901,
+        "mr_s": 131955,
+        "sp_s": 131805,
+        "mr_n": 8797,
+        "sp_n": 8787,
+        "km_diff": 0.5707510738252495,
+        "km_tol": 0.008797
+      }
+    ]
+  },
+  "duplicate_rows_counted_by_mr_only": {
+    "sum((w - 1))": 2
+  },
+  "counter_check_vs_bronze": {
+    "missing_data": {
+      "mapreduce": 10,
+      "spark_bronze": 10,
+      "match": true
+    },
+    "bad_json": {
+      "mapreduce": 0,
+      "spark_bronze": 0,
+      "match": true
+    },
+    "too_few_points": {
+      "mapreduce": 36508,
+      "spark_bronze": 36508,
+      "match": true
+    },
+    "too_long": {
+      "mapreduce": 847,
+      "spark_bronze": 847,
+      "match": true
+    },
+    "valid": {
+      "mapreduce": 1673305,
+      "spark_bronze": 1673305,
+      "match": true
+    }
+  },
+  "job_counters": {
+    "Launched map tasks": 15,
+    "Launched reduce tasks": 2,
+    "Map input records": 1710671,
+    "Map output records": 79502909,
+    "Combine input records": 80459674,
+    "Combine output records": 1353024,
+    "Reduce input records": 396259,
+    "Reduce output records": 40548,
+    "Reduce shuffle bytes": 13875926,
+    "HDFS: Number of bytes read": 1942911619,
+    "rows": 1710670,
+    "header": 1,
+    "valid_trips": 1673305,
+    "pairs_out_bbox": 1073615,
+    "pairs_fast_in_bbox": 198844,
+    "segments_emitted": 79502909,
+    "bad_csv": 0
+  },
+  "yarn_app": {
+    "id": "application_1795018875071_0001",
+    "name": "porto-zone-hour-full",
+    "state": "FINISHED",
+    "finalStatus": "SUCCEEDED",
+    "elapsedTime": 129858,
+    "allocatedMB": 512
+  },
+  "wall": {
+    "wall_seconds_submit_to_finish": 138
+  }
+}

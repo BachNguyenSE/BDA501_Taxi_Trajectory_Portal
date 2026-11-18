@@ -1,0 +1,146 @@
+{
+  "target": 0.8,
+  "test_trips": 308543,
+  "test_coverage": 0.8035,
+  "test_coverage_no_gps_jump": 0.8101,
+  "below_interval": 0.0981,
+  "above_interval": 0.0984,
+  "mean_width_min": 10.97,
+  "median_width_min": 9.8,
+  "per_bin": [
+    {
+      "bin": 0,
+      "pred_from_min": null,
+      "pred_to_min": 7.15,
+      "q_low": -3.46,
+      "q_high": 3.87,
+      "calibration_trips": 13345,
+      "test_trips": 28101,
+      "test_coverage": 0.8119,
+      "mean_width_min": 7.33
+    },
+    {
+      "bin": 1,
+      "pred_from_min": 7.15,
+      "pred_to_min": 8.18,
+      "q_low": -4.13,
+      "q_high": 3.94,
+      "calibration_trips": 13345,
+      "test_trips": 30154,
+      "test_coverage": 0.8049,
+      "mean_width_min": 8.07
+    },
+    {
+      "bin": 2,
+      "pred_from_min": 8.18,
+      "pred_to_min": 9.0,
+      "q_low": -4.34,
+      "q_high": 4.68,
+      "calibration_trips": 13345,
+      "test_trips": 27890,
+      "test_coverage": 0.8035,
+      "mean_width_min": 9.02
+    },
+    {
+      "bin": 3,
+      "pred_from_min": 9.0,
+      "pred_to_min": 9.99,
+      "q_low": -4.44,
+      "q_high": 4.63,
+      "calibration_trips": 13343,
+      "test_trips": 30637,
+      "test_coverage": 0.7937,
+      "mean_width_min": 9.06
+    },
+    {
+      "bin": 4,
+      "pred_from_min": 9.99,
+      "pred_to_min": 11.04,
+      "q_low": -4.42,
+      "q_high": 4.79,
+      "calibration_trips": 13345,
+      "test_trips": 31750,
+      "test_coverage": 0.793,
+      "mean_width_min": 9.21
+    },
+    {
+      "bin": 5,
+      "pred_from_min": 11.04,
+      "pred_to_min": 12.28,
+      "q_low": -4.85,
+      "q_high": 4.95,
+      "calibration_trips": 13348,
+      "test_trips": 31193,
+      "test_coverage": 0.7797,
+      "mean_width_min": 9.81
+    },
+    {
+      "bin": 6,
+      "pred_from_min": 12.28,
+      "pred_to_min": 13.62,
+      "q_low": -5.91,
+      "q_high": 5.75,
+      "calibration_trips": 13345,
+      "test_trips": 30758,
+      "test_coverage": 0.8349,
+      "mean_width_min": 11.66
+    },
+    {
+      "bin": 7,
+      "pred_from_min": 13.62,
+      "pred_to_min": 15.36,
+      "q_low": -5.77,
+      "q_high": 5.69,
+      "calibration_trips": 13343,
+      "test_trips": 32160,
+      "test_coverage": 0.8044,
+      "mean_width_min": 11.46
+    },
+    {
+      "bin": 8,
+      "pred_from_min": 15.36,
+      "pred_to_min": 17.71,
+      "q_low": -6.39,
+      "q_high": 6.57,
+      "calibration_trips": 13340,
+      "test_trips": 32721,
+      "test_coverage": 0.8029,
+      "mean_width_min": 12.96
+    },
+    {
+      "bin": 9,
+      "pred_from_min": 17.71,
+      "pred_to_min": null,
+      "q_low": -9.92,
+      "q_high": 9.89,
+      "calibration_trips": 13352,
+      "test_trips": 33179,
+      "test_coverage": 0.807,
+      "mean_width_min": 19.81
+    }
+  ],
+  "calibration": {
+    "model_trained_before": "2014-04-01",
+    "calibration_month": "2014-04-01 .. 2014-05-01",
+    "calibration_trips": 133451,
+    "trips_per_bin": [
+      13345,
+      13345,
+      13345,
+      13343,
+      13345,
+      13348,
+      13345,
+      13343,
+      13340,
+      13352
+    ],
+    "gbt_params": {
+      "maxIter": 50,
+      "maxDepth": 6,
+      "stepSize": 0.1,
+      "maxBins": 32,
+      "seed": 42
+    }
+  }
+}

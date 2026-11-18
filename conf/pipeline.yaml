@@ -1,0 +1,135 @@
+# Cấu hình tập trung cho toàn bộ pipeline (đề: mục 5 "Cấu hình tập trung").
+# Mọi script và job đọc từ file này, không hard-code đường dẫn hay ngưỡng.
+# Trạng thái: THIẾT KẾ (Phase 0). Chưa có job nào dùng file này.
+
+project:
+  name: bda501-porto-taxi-eta
+  seed: 42
+  pythonhashseed: 42
+  timezone_local: Europe/Lisbon      # giờ, ngày trong tuần, cuối tuần tính theo múi này
+  spark_session_timezone: UTC        # đề quy định
+
+versions:                            # cố định theo đề
+  python: "3.12"
+  jdk: "17"
+  pyspark: "4.0.1"
+  hadoop: "3.5.0"
+  mongodb: "8.x"
+  kafka: "3.9.x"
+
+paths:                               # đường dẫn trong container, gốc là /workspace
+  raw_csv: data/raw/train.csv
+  holidays_csv: data/raw/holidays.csv
+  bronze: data/bronze
+  silver: data/silver
+  gold: data/gold
+  models: models
+  checkpoints: checkpoints
+  evidence: evidence
+
+grid:
+  bbox: {lon_min: -8.80, lon_max: -8.45, lat_min: 41.05, lat_max: 41.30}
+  cell_deg: 0.005                    # ~420 x 555 m
+  n_cols: 70                         # (lon_max - lon_min) / cell_deg
+  n_rows: 50                         # (lat_max - lat_min) / cell_deg
+
+cleaning:
+  gps_interval_s: 15                 # nhãn duration = (số điểm - 1) * 15 s
+  min_points: 2
+  max_trip_min: 180                  # trên mức này: reject_reason = too_long
+  max_speed_kmh: 150                 # trên mức này: bỏ đoạn / gắn cờ nhãn mất GPS
+  reject_reasons: [missing_data, too_few_points, too_long, bad_json]
+  # Quy tắc đoạn (đề mục 5): lag trên polyline GỐC, không lọc bbox trước lag;
+  # giữ đoạn khi cả hai đầu trong bbox và tốc độ <= max_speed_kmh;
+  # zone = zone của trung điểm; giờ = giờ địa phương lúc bắt đầu đoạn.
+
+split:
+  # Temporal hold-out theo thời điểm XUẤT PHÁT, giờ địa phương.
+  train_before: "2014-05-01"         # train: < ngày này; test: 05-06/2014
+  validation_from: "2014-04-01"      # đoạn validation nằm cuối giai đoạn train (đề xuất, xem DATA_LEAKAGE.md)
+
+holidays:
+  # 10 ngày: 9 lễ quốc gia + São João (đề xuất đã được duyệt). Cột scope để tách khi cần.
+  include_municipal: true
+
+ml:
+  features: [straight_km, bearing_deg, hour, day_of_week, is_weekend, is_holiday]
+  label: duration_min
+  models: [linear_regression, gbt_regressor]
+  baselines: [naive_mean, historical_speed]
+  metrics: [mae, rmse, r2, signed_error]
+  report_label_filter: [filtered, unfiltered]   # đề xuất đã được duyệt: báo cáo cả hai
+  route_features:                    # thiết kế mở rộng (đề mục 7, cải tiến 5), chỉ xây từ train
+    enabled: false                   # bật ở Phase 4 sau khi có baseline
+    edge_frequency_penalty: 0.0      # đề xuất đã được duyệt; 0.0 = tắt (đúng đề: chỉ thời gian đi qua)
+
+routing:
+  # Dijkstra trên đồ thị zone (đề mục 10), trọng số = travel_time_s của cạnh.
+  # Đề xuất đã được duyệt: bỏ cạnh có ít lượt đi qua khi tìm đường (bảng gold vẫn giữ đủ mọi cạnh).
+  # Cạnh 1 lượt có thể cho thời gian vô lý (đo được: 6.656 s cho một cạnh). Đặt 1 = tắt bộ lọc (đúng đề).
+  min_edge_transitions: 5
+  # Đã duyệt: thời gian cạnh tính từ tốc độ lịch sử zone × giờ × cuối tuần (gồm cả lúc dừng),
+  # nửa quãng tâm-tâm đi với tốc độ zone đầu, nửa còn lại với tốc độ zone cuối.
+  # Lý do: tốc độ đo trên chính cạnh chỉ gồm xe đang chạy (49,8 km/h so với 26,6 km/h mọi đoạn).
+  edge_time: zone_hour_speed
+  # Ô zone × giờ có ít đoạn hơn mức này thì lùi về tốc độ cả ngày của zone, rồi về tốc độ toàn thành phố theo giờ.
+  min_zone_hour_segments: 20
+
+ui:
+  # Mức tắc của một zone trên tuyến = tốc độ zone tại giờ đó / tốc độ cả ngày của chính zone đó.
+  # Đề chỉ nói "dựa vào tốc độ lịch sử theo vùng × giờ" nên ngưỡng là lựa chọn thiết kế của nhóm.
+  # So với chính zone đó nên khu xe hay đứng chờ (zone 2685) không bị tô đỏ cả ngày.
+  congestion_ratio_jam: 0.7
+  congestion_ratio_slow: 0.9
+  landmarks: data/ui/landmarks.json
+  sample_trips: data/ui/sample_trips.json
+  default_departure: "2014-05-14 17:30"   # nằm trong khung replay của Phase 6
+
+spark:
+  driver_memory: 4g                # máy chỉ ~8 GB
+  shuffle_partitions: 48
+  persist_level: DISK_ONLY           # đề: không cache() toàn bộ
+  sample_fraction: 0.01              # cho --sample
+  broadcast_experiment: {enabled: true}   # Phase 2: broadcast vs sort-merge join
+
+mapreduce:
+  tolerance_km_per_segment: 1.0e-6   # sai số làm tròn cho phép khi đối chiếu
+  hdfs_input: /porto/raw         # + /<mode>/train.csv
+  hdfs_output: /porto/out        # + /<mode>
+  reducers: 2
+
+mongo:
+  uri: mongodb://mongo:27017
+  database: porto_eta
+  collections:
+    batch: [zones, zone_hour_speed, zone_graph_edges]
+    streaming: [zone_speed_live, stream_quality]
+  live_slow_ratio: 0.7               # zone live/lịch sử < 0.7 thì đánh dấu "chậm"
+  # Index đề xuất (chứng minh bằng explain() ở Phase 5):
+  #   zone_hour_speed: (zone_id, hour, is_weekend)
+  #   zone_speed_live: (window_end, zone_id)
+
+streaming:
+  kafka:
+    bootstrap: kafka:9092
+    topic: gps-segments
+    partitions: 3
+    key: TAXI_ID
+    producer_acks: all
+    create_topic_before_start: true  # lần trước bị race khi producer xóa topic
+  replay:
+    speedup: 60                      # 1 giây thật = 1 phút dữ liệu
+    window_local: {start: "2014-05-14 16:00", end: "2014-05-14 19:00"}
+    bad_data:
+      duplicate_rate: 0.01
+      late_rate: 0.005
+      late_delay_min: 30
+      corrupt_json_rate: 0.002
+    manifest: evidence/streaming/producer_manifest.json
+  spark:
+    trigger: "5 seconds"
+    watermark: "10 minutes"
+    window: "15 minutes"
+    slide: "5 minutes"               # sơ đồ ghi cửa sổ 15/5 phút
+    max_offsets_per_trigger: 5000
+    dedup_keys: [trip_id, seq]

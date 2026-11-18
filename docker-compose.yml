@@ -1,0 +1,128 @@
+# Docker Compose cho một máy (~12 vCPU, 8 GB RAM). Trạng thái: THIẾT KẾ (Phase 0).
+# Chia profile theo đề; KHÔNG chạy `hadoop` cùng lúc với Spark vì không đủ RAM.
+#
+#   mặc định  : spark, mongo, ui     docker compose up -d
+#   hadoop    : HDFS + YARN          docker compose --profile hadoop up -d   (dừng spark trước)
+#   streaming : Kafka                docker compose --profile streaming up -d
+#
+# Kafka: cấu hình viết theo tài liệu image, CHƯA kiểm chạy (kiểm ở Phase 6). Hadoop: kiểm ở Phase 3.
+
+name: bda501
+
+services:
+  spark:
+    build:
+      context: .
+      dockerfile: docker/spark/Dockerfile
+    image: bda501/spark:py3.12-jdk17-pyspark4.0.1
+    working_dir: /workspace
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./:/workspace
+    environment:
+      PYTHONHASHSEED: "42"
+      PYTHONPATH: /workspace/src        # import theo tên cụm: from batch.silver import ...
+      TZ: UTC
+    ports:
+      - "4040:4040"       # Spark UI (ảnh chụp cho báo cáo)
+    mem_limit: 6g
+
+  ui:
+    # Giao diện Streamlit (mục 10). Dùng chung image với spark để nạp model Spark ML.
+    image: bda501/spark:py3.12-jdk17-pyspark4.0.1
+    working_dir: /workspace
+    command: ["streamlit", "run", "src/serving/app.py", "--server.port=8501", "--server.address=0.0.0.0",
+              "--server.headless=true", "--browser.gatherUsageStats=false"]
+    volumes:
+      - ./:/workspace
+    environment:
+      PYTHONHASHSEED: "42"
+      PYTHONPATH: /workspace/src        # import theo tên cụm: from batch.silver import ...
+      TZ: UTC
+    ports:
+      - "8501:8501"
+    mem_limit: 2g
+    depends_on: [mongo]
+
+  mongo:
+    image: mongo:8.0
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    mem_limit: 1g
+
+  # ---- profile hadoop (mục 6: MapReduce) -------------------------------------
+  # Image apache/hadoop chỉ có bản amd64: trên Mac ARM chạy qua giả lập nên chậm hơn máy amd64.
+  # HDFS không gắn volume: dữ liệu chỉ phục vụ job MapReduce, mỗi lần chạy nạp lại từ data/raw.
+  namenode:
+    profiles: [hadoop]
+    image: apache/hadoop:3.5.0
+    platform: linux/amd64
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    env_file: docker/hadoop/hadoop.env
+    environment:
+      ENSURE_NAMENODE_DIR: /tmp/hadoop-hadoop/dfs/name
+    ports:
+      - "9870:9870"       # HDFS UI
+    mem_limit: 1g
+
+  datanode:
+    profiles: [hadoop]
+    image: apache/hadoop:3.5.0
+    platform: linux/amd64
+    command: ["hdfs", "datanode"]
+    env_file: docker/hadoop/hadoop.env
+    mem_limit: 1g
+    depends_on: [namenode]
+
+  resourcemanager:
+    profiles: [hadoop]
+    image: apache/hadoop:3.5.0
+    platform: linux/amd64
+    hostname: resourcemanager
+    command: ["yarn", "resourcemanager"]
+    env_file: docker/hadoop/hadoop.env
+    ports:
+      - "8088:8088"       # YARN UI và REST (poll cổng này, không dùng `yarn node -list`)
+    mem_limit: 1g
+    depends_on: [namenode]
+
+  nodemanager:
+    profiles: [hadoop]
+    image: apache/hadoop:3.5.0
+    platform: linux/amd64
+    hostname: nodemanager
+    command: ["yarn", "nodemanager"]
+    env_file: docker/hadoop/hadoop.env
+    volumes:
+      - ./:/workspace     # mapper/reducer Python và dữ liệu raw đọc từ đây
+    mem_limit: 3500m
+    depends_on: [resourcemanager]
+
+  # ---- profile streaming (mục 13: Kafka KRaft, một node) ----------------------
+  kafka:
+    profiles: [streaming]
+    image: apache/kafka:3.9.1
+    hostname: kafka
+    ports:
+      - "9094:9094"       # truy cập từ máy host
+    environment:
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENERS: INTERNAL://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"   # tạo topic thủ công trước producer/consumer
+      KAFKA_NUM_PARTITIONS: "3"
+    mem_limit: 1g
+
+volumes:
+  mongo_data:

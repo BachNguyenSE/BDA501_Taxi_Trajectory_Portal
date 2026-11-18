@@ -1,0 +1,294 @@
+{
+  "sql": "SELECT hour, is_weekend,\n       SUM(total_km) / (SUM(total_s) / 3600.0) AS speed_kmh,\n       SUM(n_segments) AS n_segments\nFROM zone_hour_speed\nGROUP BY hour, is_weekend\nORDER BY is_weekend, hour",
+  "seconds": 0.11,
+  "rows": [
+    {
+      "hour": 0,
+      "is_weekend": false,
+      "speed_kmh": 29.054986884709155,
+      "n_segments": 10122
+    },
+    {
+      "hour": 1,
+      "is_weekend": false,
+      "speed_kmh": 31.625120697069228,
+      "n_segments": 10237
+    },
+    {
+      "hour": 2,
+      "is_weekend": false,
+      "speed_kmh": 30.642053408893755,
+      "n_segments": 9116
+    },
+    {
+      "hour": 3,
+      "is_weekend": false,
+      "speed_kmh": 33.81096080150855,
+      "n_segments": 7539
+    },
+    {
+      "hour": 4,
+      "is_weekend": false,
+      "speed_kmh": 40.80810368457856,
+      "n_segments": 11198
+    },
+    {
+      "hour": 5,
+      "is_weekend": false,
+      "speed_kmh": 41.39185311672055,
+      "n_segments": 11600
+    },
+    {
+      "hour": 6,
+      "is_weekend": false,
+      "speed_kmh": 38.82692085725527,
+      "n_segments": 10055
+    },
+    {
+      "hour": 7,
+      "is_weekend": false,
+      "speed_kmh": 34.26710360076798,
+      "n_segments": 15113
+    },
+    {
+      "hour": 8,
+      "is_weekend": false,
+      "speed_kmh": 23.46787753523263,
+      "n_segments": 31791
+    },
+    {
+      "hour": 9,
+      "is_weekend": false,
+      "speed_kmh": 23.640655333924908,
+      "n_segments": 39271
+    },
+    {
+      "hour": 10,
+      "is_weekend": false,
+      "speed_kmh": 25.019908193759367,
+      "n_segments": 41080
+    },
+    {
+      "hour": 11,
+      "is_weekend": false,
+      "speed_kmh": 26.642028861846633,
+      "n_segments": 37435
+    },
+    {
+      "hour": 12,
+      "is_weekend": false,
+      "speed_kmh": 24.788221624189106,
+      "n_segments": 31676
+    },
+    {
+      "hour": 13,
+      "is_weekend": false,
+      "speed_kmh": 26.15843625361083,
+      "n_segments": 30036
+    },
+    {
+      "hour": 14,
+      "is_weekend": false,
+      "speed_kmh": 24.22539138010569,
+      "n_segments": 34733
+    },
+    {
+      "hour": 15,
+      "is_weekend": false,
+      "speed_kmh": 23.386771816476774,
+      "n_segments": 39544
+    },
+    {
+      "hour": 16,
+      "is_weekend": false,
+      "speed_kmh": 22.66687123036221,
+      "n_segments": 39327
+    },
+    {
+      "hour": 17,
+      "is_weekend": false,
+      "speed_kmh": 22.38942723745304,
+      "n_segments": 40880
+    },
+    {
+      "hour": 18,
+      "is_weekend": false,
+      "speed_kmh": 20.440430519243694,
+      "n_segments": 38324
+    },
+    {
+      "hour": 19,
+      "is_weekend": false,
+      "speed_kmh": 23.03330115633975,
+      "n_segments": 31837
+    },
+    {
+      "hour": 20,
+      "is_weekend": false,
+      "speed_kmh": 25.511238669281017,
+      "n_segments": 24122
+    },
+    {
+      "hour": 21,
+      "is_weekend": false,
+      "speed_kmh": 29.125748199578247,
+      "n_segments": 19332
+    },
+    {
+      "hour": 22,
+      "is_weekend": false,
+      "speed_kmh": 28.83528335765478,
+      "n_segments": 16656
+    },
+    {
+      "hour": 23,
+      "is_weekend": false,
+      "speed_kmh": 28.0885906572955,
+      "n_segments": 15845
+    },
+    {
+      "hour": 0,
+      "is_weekend": true,
+      "speed_kmh": 27.648999828871215,
+      "n_segments": 8991
+    },
+    {
+      "hour": 1,
+      "is_weekend": true,
+      "speed_kmh": 29.35960134869422,
+      "n_segments": 10341
+    },
+    {
+      "hour": 2,
+      "is_weekend": true,
+      "speed_kmh": 30.22060628763752,
+      "n_segments": 11808
+    },
+    {
+      "hour": 3,
+      "is_weekend": true,
+      "speed_kmh": 32.449381693637996,
+      "n_segments": 10916
+    },
+    {
+      "hour": 4,
+      "is_weekend": true,
+      "speed_kmh": 34.64895200236239,
+      "n_segments": 14192
+    },
+    {
+      "hour": 5,
+      "is_weekend": true,
+      "speed_kmh": 34.48025644752489,
+      "n_segments": 12572
+    },
+    {
+      "hour": 6,
+      "is_weekend": true,
+      "speed_kmh": 34.989904733133734,
+      "n_segments": 11124
+    },
+    {
+      "hour": 7,
+      "is_weekend": true,
+      "speed_kmh": 35.15361506961682,
+      "n_segments": 7980
+    },
+    {
+      "hour": 8,
+      "is_weekend": true,
+      "speed_kmh": 33.19969442795823,
+      "n_segments": 5532
+    },
+    {
+      "hour": 9,
+      "is_weekend": true,
+      "speed_kmh": 32.471392357451954,
+      "n_segments": 6982
+    },
+    {
+      "hour": 10,
+      "is_weekend": true,
+      "speed_kmh": 29.211957699186225,
+      "n_segments": 7516
+    },
+    {
+      "hour": 11,
+      "is_weekend": true,
+      "speed_kmh": 28.18682864659108,
+      "n_segments": 7628
+    },
+    {
+      "hour": 12,
+      "is_weekend": true,
+      "speed_kmh": 25.561288925530757,
+      "n_segments": 8215
+    },
+    {
+      "hour": 13,
+      "is_weekend": true,
+      "speed_kmh": 34.23057030693448,
+      "n_segments": 7603
+    },
+    {
+      "hour": 14,
+      "is_weekend": true,
+      "speed_kmh": 31.71598809547626,
+      "n_segments": 6180
+    },
+    {
+      "hour": 15,
+      "is_weekend": true,
+      "speed_kmh": 26.213907025353077,
+      "n_segments": 8025
+    },
+    {
+      "hour": 16,
+      "is_weekend": true,
+      "speed_kmh": 23.054216292910304,
+      "n_segments": 7545
+    },
+    {
+      "hour": 17,
+      "is_weekend": true,
+      "speed_kmh": 23.01559311701446,
+      "n_segments": 8406
+    },
+    {
+      "hour": 18,
+      "is_weekend": true,
+      "speed_kmh": 26.08465976236982,
+      "n_segments": 7014
+    },
+    {
+      "hour": 19,
+      "is_weekend": true,
+      "speed_kmh": 25.2574138121183,
+      "n_segments": 8192
+    },
+    {
+      "hour": 20,
+      "is_weekend": true,
+      "speed_kmh": 29.056735237684407,
+      "n_segments": 9078
+    },
+    {
+      "hour": 21,
+      "is_weekend": true,
+      "speed_kmh": 29.23916692302677,
+      "n_segments": 8185
+    },
+    {
+      "hour": 22,
+      "is_weekend": true,
+      "speed_kmh": 27.111411094389798,
+      "n_segments": 7180
+    },
+    {
+      "hour": 23,
+      "is_weekend": true,
+      "speed_kmh": 26.52325776615948,
+      "n_segments": 6328
+    }
+  ]
+}

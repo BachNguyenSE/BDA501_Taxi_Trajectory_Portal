@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Sân bay Porto (nhà ga, Francisco Sá Carneiro)",
+    "lat": 41.2378,
+    "lon": -8.6707,
+    "zone_id": 2615,
+    "zone_segments": 323958,
+    "ok": true
+  },
+  {
+    "name": "Ga São Bento",
+    "lat": 41.1456,
+    "lon": -8.6105,
+    "zone_id": 1367,
+    "zone_segments": 3323206,
+    "ok": true
+  },
+  {
+    "name": "Ga Campanhã",
+    "lat": 41.1489,
+    "lon": -8.5855,
+    "zone_id": 1372,
+    "zone_segments": 1206068,
+    "ok": true
+  },
+  {
+    "name": "Quảng trường Aliados",
+    "lat": 41.1496,
+    "lon": -8.611,
+    "zone_id": 1367,
+    "zone_segments": 3323206,
+    "ok": true
+  },
+  {
+    "name": "Tháp Clérigos",
+    "lat": 41.1458,
+    "lon": -8.6145,
+    "zone_id": 1367,
+    "zone_segments": 3323206,
+    "ok": true
+  },
+  {
+    "name": "Ribeira (bờ sông Douro)",
+    "lat": 41.1406,
+    "lon": -8.6131,
+    "zone_id": 1297,
+    "zone_segments": 1360118,
+    "ok": true
+  },
+  {
+    "name": "Casa da Música",
+    "lat": 41.1588,
+    "lon": -8.6307,
+    "zone_id": 1503,
+    "zone_segments": 582859,
+    "ok": true
+  },
+  {
+    "name": "Sân vận động Dragão",
+    "lat": 41.1618,
+    "lon": -8.5838,
+    "zone_id": 1583,
+    "zone_segments": 407256,
+    "ok": true
+  },
+  {
+    "name": "Sân vận động Bessa",
+    "lat": 41.1622,
+    "lon": -8.6431,
+    "zone_id": 1571,
+    "zone_segments": 661639,
+    "ok": true
+  },
+  {
+    "name": "Bệnh viện São João",
+    "lat": 41.182,
+    "lon": -8.6017,
+    "zone_id": 1859,
+    "zone_segments": 488635,
+    "ok": true
+  },
+  {
+    "name": "Đại học Kỹ thuật FEUP",
+    "lat": 41.178,
+    "lon": -8.598,
+    "zone_id": 1790,
+    "zone_segments": 269937,
+    "ok": true
+  },
+  {
+    "name": "Trung tâm thương mại NorteShopping",
+    "lat": 41.182,
+    "lon": -8.655,
+    "zone_id": 1849,
+    "zone_segments": 186470,
+    "ok": true
+  },
+  {
+    "name": "Bãi biển Matosinhos",
+    "lat": 41.176,
+    "lon": -8.688,
+    "zone_id": 1772,
+    "zone_segments": 112627,
+    "ok": true
+  },
+  {
+    "name": "Foz do Douro",
+    "lat": 41.148,
+    "lon": -8.676,
+    "zone_id": 1354,
+    "zone_segments": 32075,
+    "ok": true
+  },
+  {
+    "name": "Cais de Gaia (bờ nam sông)",
+    "lat": 41.137,
+    "lon": -8.613,
+    "zone_id": 1227,
+    "zone_segments": 177086,
+    "ok": true
+  }
+]

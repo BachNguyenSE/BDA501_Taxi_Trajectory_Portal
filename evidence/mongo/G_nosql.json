@@ -1,0 +1,68 @@
+{
+  "load_seconds": 1.02,
+  "counts_in_mongo": {
+    "zones": 2142,
+    "zone_hour_speed": 72142,
+    "zone_graph_edges": 9444
+  },
+  "counts_in_gold": {
+    "zones": 2142,
+    "zone_hour_speed": 72142,
+    "zone_graph_edges": 9444
+  },
+  "counts_match": true,
+  "indexes": {
+    "zones": [
+      "_id_",
+      "gx_gy"
+    ],
+    "zone_hour_speed": [
+      "_id_",
+      "zone_hour_weekend"
+    ],
+    "zone_graph_edges": [
+      "_id_",
+      "zone_from"
+    ],
+    "zone_speed_live": [
+      "_id_",
+      "window_end_zone"
+    ]
+  },
+  "explain_point_query": {
+    "filter": {
+      "zone_id": 1574,
+      "hour": 3,
+      "is_weekend": false
+    },
+    "with_index": {
+      "stages": [
+        "FETCH",
+        "IXSCAN"
+      ],
+      "totalDocsExamined": 1,
+      "totalKeysExamined": 1
+    },
+    "forced_collection_scan": {
+      "stages": [
+        "COLLSCAN"
+      ],
+      "totalDocsExamined": 72142
+    }
+  },
+  "latency_point_read": {
+    "with_index": {
+      "n": 1000,
+      "p50_ms": 0.125,
+      "p95_ms": 0.135,
+      "max_ms": 0.248
+    },
+    "forced_collection_scan": {
+      "n": 200,
+      "p50_ms": 15.639,
+      "p95_ms": 16.134,
+      "max_ms": 18.813
+    }
+  },
+  "note": "Độ trễ đo từ container spark tới container mongo trên cùng máy, gồm cả vòng mạng Docker."
+}

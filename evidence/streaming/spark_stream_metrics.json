@@ -1,0 +1,39 @@
+{
+  "quality": {
+    "batches": 47,
+    "numInputRows": 42395,
+    "stateOperators": {},
+    "last_watermark": null,
+    "batch_duration_ms_p50": 137
+  },
+  "live": {
+    "batches": 47,
+    "numInputRows": 42395,
+    "stateOperators": {
+      "stateStoreSave": {
+        "numRowsDroppedByWatermark": 0,
+        "customMetrics": {}
+      },
+      "dedupeWithinWatermark": {
+        "numRowsDroppedByWatermark": 208,
+        "customMetrics": {
+          "numDroppedDuplicateRows": 413
+        }
+      }
+    },
+    "last_watermark": "2014-05-14T18:50:00.000Z",
+    "batch_duration_ms_p50": 254
+  },
+  "ran_seconds": 268.7,
+  "config": {
+    "trigger": "5 seconds",
+    "watermark": "10 minutes",
+    "window": "15 minutes",
+    "slide": "5 minutes",
+    "max_offsets_per_trigger": 5000,
+    "dedup_keys": [
+      "trip_id",
+      "seq"
+    ]
+  }
+}

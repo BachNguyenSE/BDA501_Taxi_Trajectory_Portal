@@ -1,0 +1,96 @@
+{
+  "sql": "SELECT z.zone_id, z.gx, z.gy, round(z.center_lat, 4) AS center_lat, round(z.center_lon, 4) AS center_lon,\n       SUM(h.total_km) / (SUM(h.total_s) / 3600.0) AS speed_kmh,\n       SUM(h.n_segments) AS n_segments\nFROM zone_hour_speed h JOIN zones z ON h.zone_id = z.zone_id\nWHERE h.is_weekend = false AND h.hour IN (8, 9, 17, 18, 19)\nGROUP BY z.zone_id, z.gx, z.gy, z.center_lat, z.center_lon\nHAVING SUM(h.n_segments) >= 20\nORDER BY speed_kmh ASC\nLIMIT 10",
+  "seconds": 0.18,
+  "rows": [
+    {
+      "zone_id": 2282,
+      "gx": 42,
+      "gy": 32,
+      "center_lat": 41.2125,
+      "center_lon": -8.5875,
+      "speed_kmh": 1.2824779941638424,
+      "n_segments": 29
+    },
+    {
+      "zone_id": 2685,
+      "gx": 25,
+      "gy": 38,
+      "center_lat": 41.2425,
+      "center_lon": -8.6725,
+      "speed_kmh": 1.570024472273883,
+      "n_segments": 142
+    },
+    {
+      "zone_id": 669,
+      "gx": 39,
+      "gy": 9,
+      "center_lat": 41.0975,
+      "center_lon": -8.6025,
+      "speed_kmh": 2.287751942622716,
+      "n_segments": 84
+    },
+    {
+      "zone_id": 3024,
+      "gx": 14,
+      "gy": 43,
+      "center_lat": 41.2675,
+      "center_lon": -8.7275,
+      "speed_kmh": 2.441789546920699,
+      "n_segments": 58
+    },
+    {
+      "zone_id": 2686,
+      "gx": 26,
+      "gy": 38,
+      "center_lat": 41.2425,
+      "center_lon": -8.6675,
+      "speed_kmh": 2.5785863709046075,
+      "n_segments": 114
+    },
+    {
+      "zone_id": 1887,
+      "gx": 67,
+      "gy": 26,
+      "center_lat": 41.1825,
+      "center_lon": -8.4625,
+      "speed_kmh": 3.3637325359167227,
+      "n_segments": 34
+    },
+    {
+      "zone_id": 1024,
+      "gx": 44,
+      "gy": 14,
+      "center_lat": 41.1225,
+      "center_lon": -8.5775,
+      "speed_kmh": 3.6442186892566317,
+      "n_segments": 60
+    },
+    {
+      "zone_id": 2618,
+      "gx": 28,
+      "gy": 37,
+      "center_lat": 41.2375,
+      "center_lon": -8.6575,
+      "speed_kmh": 4.414074260908349,
+      "n_segments": 33
+    },
+    {
+      "zone_id": 2622,
+      "gx": 32,
+      "gy": 37,
+      "center_lat": 41.2375,
+      "center_lon": -8.6375,
+      "speed_kmh": 4.838782379920404,
+      "n_segments": 74
+    },
+    {
+      "zone_id": 2428,
+      "gx": 48,
+      "gy": 34,
+      "center_lat": 41.2225,
+      "center_lon": -8.5575,
+      "speed_kmh": 4.983141286430137,
+      "n_segments": 37
+    }
+  ]
+}

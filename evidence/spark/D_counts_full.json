@@ -1,0 +1,63 @@
+{
+  "mode": "full",
+  "bronze_valid_rows": 1673305,
+  "silver_trips": 1673303,
+  "silver_segments": 79502899,
+  "pairs_total": 80775358,
+  "pairs_dropped_outside_bbox": 1073615,
+  "pairs_dropped_speed_over_limit_in_bbox": 198844,
+  "segments_expected_from_arrays": 79502899,
+  "segments_match": true,
+  "trip_uid_unique": true,
+  "trip_id_shared_by_several_trips": 9,
+  "gold_rows": {
+    "zones": 2142,
+    "zone_hour_speed": 72142,
+    "zone_graph_edges": 9444,
+    "trip_features": 1673303
+  },
+  "nulls": {
+    "zone_hour_speed": {
+      "zone_id": 0,
+      "hour": 0,
+      "is_weekend": 0,
+      "total_km": 0,
+      "total_s": 0
+    },
+    "trip_features": {
+      "straight_km": 0,
+      "bearing_deg": 0,
+      "hour": 0,
+      "day_of_week": 0,
+      "is_weekend": 0,
+      "is_holiday": 0,
+      "duration_min": 0,
+      "origin_zone": 1230,
+      "dest_zone": 9481
+    }
+  },
+  "ranges": {
+    "zone_hour_speed.avg_speed_kmh": [
+      0.0,
+      148.90347864263674
+    ],
+    "zone_graph_edges.travel_time_s": [
+      11.9544647322346,
+      6656.183804505298
+    ],
+    "trip_features.straight_km": [
+      0.0,
+      1130.0370319629587
+    ],
+    "trip_features.bearing_deg": [
+      0.0,
+      359.99958766242435
+    ]
+  },
+  "holidays_trips": 46002,
+  "timings_s": {
+    "silver_trips_s": 25.4,
+    "silver_segments_s": 22.7,
+    "gold_s": 19.7
+  }
+}
