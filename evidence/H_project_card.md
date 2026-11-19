@@ -30,12 +30,14 @@ Phạm vi là **known-destination ETA**: B do khách nhập lúc đặt xe nên 
 | Kafka | Hàng chờ giữa producer và Spark | **Không phải vì throughput** (khoảng 200 tin/giây khi phát ×60): để tách producer khỏi consumer, đọc lại theo offset, nhiều consumer độc lập |
 | Spark Structured Streaming | Watermark, bỏ trùng, cửa sổ trượt theo zone | Xử lý tin trễ và trùng theo thời gian sự kiện |
 | Streamlit | Giao diện | Viết nhanh bằng Python, đúng sơ đồ đã duyệt |
+| FastAPI | REST `POST /estimate` cho hệ thống khác gọi | Bọc cùng hàm với giao diện; kiểm tra thứ tự feature khi khởi động |
 
 ## Kết quả chính (số đo thật)
 
 | Hạng mục | Kết quả | Bằng chứng |
 |---|---|---|
 | ETA, temporal hold-out | GBT MAE **4.21** phút (naive 5.55, Linear 4.57), R² 0.22 | `ml/E_model_validation.md` |
+| Feature thời gian theo đồ thị | Quyết định trên 04/2014 (giữ); test MAE GBT 4.19 → 4.10, R² 0,23 → 0,24 | `ml/graph_features.md` |
 | Khoảng ước lượng 80% (mở rộng) | Bao phủ **80.3%** trên test, độ rộng trung vị 9.8 phút | `ml/interval_validation.md` |
 | Leakage | Kiểm tra tự động đạt: tách thời gian, 0 chuyến ở cả hai tập, baseline chỉ từ train | `ml/leakage_checks_full.json` |
 | Spark ↔ MapReduce | 40,548 / 40,548 key khớp, 0 lệch | `mapreduce/phase3_summary.md` |
@@ -60,7 +62,7 @@ Phạm vi là **known-destination ETA**: B do khách nhập lúc đặt xe nên 
 
 ## Chỉ thiết kế [P]
 
-Nguồn GPS live thật; lịch ETL hằng ngày và huấn luyện lại hằng tháng; HDFS hoặc S3 cho cụm; REST `POST /estimate`; feature thời gian theo đồ thị tuyến cho model; map-matching với OpenStreetMap.
+Nguồn GPS live thật; lịch ETL hằng ngày và huấn luyện lại hằng tháng; HDFS hoặc S3 cho cụm; phục vụ bằng model có feature đồ thị (đã huấn luyện và đo, chưa đưa vào API); map-matching với OpenStreetMap.
 
 ## Tái lập
 

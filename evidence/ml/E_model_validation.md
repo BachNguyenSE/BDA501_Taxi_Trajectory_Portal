@@ -74,6 +74,10 @@ Chạy bằng `python src/ml/job_train_eta.py --mode full` (sample trước, ful
 
 Hiệu chỉnh trên sai số tháng 04/2014 của một model chỉ học dữ liệu trước đó. Độ bao phủ đo một lần trên tập test: **80.35%** (mục tiêu 80%), độ rộng trung vị 9.8 phút. Chi tiết: `interval_validation.md`.
 
+## Feature thời gian theo đồ thị (đã hứa ở Session 9)
+
+Đồ thị chỉ xây từ train, chuyến huấn luyện dùng đồ thị của các tuần khác, quyết định trên 04/2014: MAE GBT 4.199 → 4.117, **giữ**. Trên test: 4.192 → 4.105, R² 0.228 → 0.240. Chi tiết: `graph_features.md`. Nhóm giữ GBT 6 feature để phục vụ (cải thiện chỉ khoảng 2%, phục vụ model mới cần thêm đồ thị chỉ từ train lúc dự đoán); đưa model có đồ thị vào phục vụ là hướng phát triển [P].
+
 ## Model đã lưu (mục 8)
 
 `models/spark_{linear,gbt}_{train_all,train_no_gps_jump}` (Spark ML) và `models/features.json` (thứ tự feature, nhãn, mốc chia, tham số). Model phục vụ được **chọn trước khi chạy**: `spark_gbt_train_all`, huấn luyện chỉ trên giai đoạn train, nên phép thử F3 (một chuyến từ CSV đến dự đoán) sẽ là ngoài mẫu. `models/` không commit lên git. Có dùng bản sklearn cho giao diện hay không sẽ quyết ở Phase 5, và nếu dùng thì phải đánh giá lại trên cùng tập test và ghi rõ.

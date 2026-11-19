@@ -4,10 +4,10 @@
     "numInputRows": 42395,
     "stateOperators": {},
     "last_watermark": null,
-    "batch_duration_ms_p50": 137
+    "batch_duration_ms_p50": 133
   },
   "live": {
-    "batches": 47,
+    "batches": 48,
     "numInputRows": 42395,
     "stateOperators": {
       "stateStoreSave": {
@@ -22,7 +22,7 @@
       }
     },
     "last_watermark": "2014-05-14T18:50:00.000Z",
-    "batch_duration_ms_p50": 254
+    "batch_duration_ms_p50": 257
   },
   "ran_seconds": 268.7,
   "config": {

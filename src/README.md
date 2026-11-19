@@ -30,7 +30,7 @@ src/
 | 6 | `mapreduce/mapper.py`, `reducer.py` | cùng phép tính viết lại bằng MapReduce để đối chiếu |
 | 7 | `ml/job_train_eta.py` | chia train/test theo thời gian, baseline, GBT, kiểm tra leakage |
 | 8 | `serving/estimate.py` | từ A, B, giờ ra ETA, tuyến, zone tắc, lớp live |
-| 9 | `serving/app.py` | giao diện |
+| 9 | `serving/page_estimate.py`, `page_streaming.py` | hai trang giao diện (`app.py` chỉ điều hướng) |
 | 10 | `streaming/producer.py`, `stream_job.py` | luồng streaming |
 
 ## Chạy

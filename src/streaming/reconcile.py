@@ -22,7 +22,7 @@ def main():
     offsets = (ev / "kafka_offsets.txt").read_text().split()
     part = {p.split(":")[1]: int(p.split(":")[2]) for p in offsets if p.count(":") == 2}
 
-    q = list(db.stream_quality.aggregate([{"$group": {"_id": None, "n": {"$sum": "$n_messages"},
+    q = list(db.stream_quality.aggregate([{"$match": {"type": "quality"}}, {"$group": {"_id": None, "n": {"$sum": "$n_messages"},
                                                        "bad": {"$sum": "$n_corrupt_json"}, "b": {"$sum": 1}}}]))[0]
     live = list(db.zone_speed_live.aggregate([{"$group": {"_id": None, "docs": {"$sum": 1}, "seg": {"$sum": "$n_segments"},
                                                           "w0": {"$min": "$window_start"}, "w1": {"$max": "$window_end"}}}]))[0]

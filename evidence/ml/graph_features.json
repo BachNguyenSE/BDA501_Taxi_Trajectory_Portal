@@ -1,0 +1,130 @@
+{
+  "K_week_folds": 5,
+  "rule": "giữ feature đồ thị nếu MAE của GBT trên 04/2014 giảm",
+  "gbt_params": {
+    "maxIter": 50,
+    "maxDepth": 6,
+    "stepSize": 0.1,
+    "maxBins": 32,
+    "seed": 42
+  },
+  "validation": {
+    "segments_used_before": "2014-04-01",
+    "max_segment_time_used": "2014-03-31 23:59:59",
+    "fit_trips": 1231185,
+    "eval_trips": 133451,
+    "graph_found_share_fit": 0.9936110332728225,
+    "graph_found_share_eval": 0.9942151051696877,
+    "results": {
+      "base_6_features": {
+        "gbt": {
+          "n": 133451,
+          "mae": 4.1985602778721605,
+          "rmse": 8.39819879502475,
+          "signed_error": 0.03884834222115844,
+          "mean_label": 11.943473634517538,
+          "r2": 0.22748920575312348
+        },
+        "linear": {
+          "n": 133451,
+          "mae": 4.62197308068915,
+          "rmse": 8.729987557656905,
+          "signed_error": 0.04861583668191634,
+          "mean_label": 11.943473634517538,
+          "r2": 0.16524408592351292
+        }
+      },
+      "with_graph_features": {
+        "gbt": {
+          "n": 133451,
+          "mae": 4.116870608942816,
+          "rmse": 8.335018790750327,
+          "signed_error": 0.04140349711811448,
+          "mean_label": 11.943473634517538,
+          "r2": 0.23906874727696492
+        },
+        "linear": {
+          "n": 133451,
+          "mae": 4.315094591448468,
+          "rmse": 8.54276367706631,
+          "signed_error": 0.032628699952243594,
+          "mean_label": 11.943473634517538,
+          "r2": 0.20066461272510394
+        },
+        "gbt_feature_importance": {
+          "straight_km": 0.3291,
+          "bearing_deg": 0.1264,
+          "hour": 0.1653,
+          "day_of_week": 0.0265,
+          "is_weekend_f": 0.028,
+          "is_holiday_f": 0.008,
+          "graph_time_min": 0.2707,
+          "graph_km": 0.0459,
+          "graph_found": 0.0
+        }
+      }
+    }
+  },
+  "decision": {
+    "gbt_mae_validation_base": 4.1985602778721605,
+    "gbt_mae_validation_with_graph": 4.116870608942816,
+    "keep_graph_features": true
+  },
+  "test": {
+    "segments_used_before": "2014-05-01",
+    "max_segment_time_used": "2014-04-30 23:59:59",
+    "fit_trips": 1364636,
+    "eval_trips": 308543,
+    "graph_found_share_eval": 0.9938258200639781,
+    "results": {
+      "base_6_features": {
+        "gbt": {
+          "n": 308543,
+          "mae": 4.192181493096521,
+          "rmse": 8.270259526040755,
+          "signed_error": 0.05240579721694181,
+          "mean_label": 12.102567551362371,
+          "r2": 0.2282810216903347
+        },
+        "linear": {
+          "n": 308543,
+          "mae": 4.566106740898663,
+          "rmse": 8.559685303938666,
+          "signed_error": 0.034467296771694224,
+          "mean_label": 12.102567551362371,
+          "r2": 0.17332177063984433
+        }
+      },
+      "with_graph_features": {
+        "gbt": {
+          "n": 308543,
+          "mae": 4.10488553189961,
+          "rmse": 8.204740132211747,
+          "signed_error": 0.03771058499408026,
+          "mean_label": 12.102567551362371,
+          "r2": 0.2404601495345755
+        },
+        "linear": {
+          "n": 308543,
+          "mae": 4.284924578601559,
+          "rmse": 8.381334605748092,
+          "signed_error": 0.06657563302512237,
+          "mean_label": 12.102567551362371,
+          "r2": 0.20741241977639902
+        },
+        "gbt_feature_importance": {
+          "straight_km": 0.3303,
+          "bearing_deg": 0.1297,
+          "hour": 0.1595,
+          "day_of_week": 0.0273,
+          "is_weekend_f": 0.0284,
+          "is_holiday_f": 0.0103,
+          "graph_time_min": 0.2678,
+          "graph_km": 0.0468,
+          "graph_found": 0.0
+        }
+      }
+    }
+  },
+  "seconds": 213.9
+}

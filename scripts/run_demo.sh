@@ -6,5 +6,5 @@ cd "$(dirname "$0")/.."
 docker compose up -d mongo
 docker compose run --rm spark python src/serving/job_load_mongo.py
 docker compose run --rm --no-deps spark python src/serving/make_ui_data.py >/dev/null
-docker compose up -d ui
-echo "Giao diện: http://localhost:8501"
+docker compose up -d ui api
+echo "Giao diện: http://localhost:8501   ·   REST API: http://localhost:8000/docs"

@@ -90,11 +90,13 @@
 <text x="1825" y="220" text-anchor="middle" font-size="11" font-weight="800" fill="#2F7F7B">I</text>
 <rect x="1600" y="450" width="250" height="190" rx="12" fill="#fff" stroke="#C2693A" stroke-width="2"/>
 <circle cx="1624" cy="474" r="15" fill="#C2693A"/><text x="1624" y="479" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">10</text>
-<text x="1646" y="480" font-size="17" font-weight="700" fill="#1F3A4D">Streamlit UI</text>
+<text x="1646" y="480" font-size="17" font-weight="700" fill="#1F3A4D">Streamlit + API</text>
 <text x="1616" y="506" font-size="13" fill="#7A8794">chọn A, B, giờ trên bản đồ</text>
-<text x="1616" y="524" font-size="13" fill="#7A8794">ETA từ models/</text>
+<text x="1616" y="524" font-size="13" fill="#7A8794">ETA + khoảng 80% từ models/</text>
 <text x="1616" y="542" font-size="13" fill="#7A8794">Dijkstra trên đồ thị zone</text>
 <text x="1616" y="560" font-size="13" fill="#7A8794">tô zone tắc, viền zone chậm</text>
+<text x="1616" y="578" font-size="13" fill="#7A8794">REST POST /estimate (FastAPI)</text>
+<text x="1616" y="596" font-size="13" fill="#7A8794">trang giám sát streaming</text>
 <rect x="1812" y="462" width="26" height="18" rx="9" fill="#2E8B57" fill-opacity="0.15" stroke="#2E8B57"/>
 <text x="1825" y="475" text-anchor="middle" font-size="11" font-weight="800" fill="#2E8B57">I</text>
 <rect x="70" y="690" width="220" height="80" rx="12" fill="#F0F2F4" stroke="#7A8794" stroke-width="2" stroke-dasharray="6 5"/>

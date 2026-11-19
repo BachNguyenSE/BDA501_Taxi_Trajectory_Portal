@@ -37,7 +37,7 @@
   "topic": "gps-segments",
   "key": "TAXI_ID",
   "acks": "all",
-  "load_seconds": 8.6,
+  "load_seconds": 8.7,
   "messages_handed_to_kafka": 42395,
   "send_errors": 0,
   "replay_wall_seconds": 210.0

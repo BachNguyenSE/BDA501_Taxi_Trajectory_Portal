@@ -193,11 +193,11 @@ Cập nhật mục này mỗi khi xong một phase. Chỉ được chuyển mộ
 | 7 Spark ML | Đã chạy sample và full (Phase 4): GBT MAE 4,21 phút, temporal hold-out | `evidence/ml/E_model_validation.md`, `leakage_checks_full.json` |
 | 8 models/ | Đã lưu model Spark và `features.json` | `evidence/ml/E_model_validation.md` |
 | 9 MongoDB | Đã nạp 3 collection batch, index, IXSCAN, độ trễ p50 0,12 ms (Phase 5) | `evidence/mongo/G_nosql.md` |
-| 10 Streamlit UI | Đã chạy (Phase 5): 3 cách nhập, tuyến trên lưới zone, F3 end-to-end. Lớp live chờ Phase 6 | `evidence/serving/F3_end_to_end.md`, `evidence/screenshots/` |
+| 10 Streamlit UI + REST API | Đã chạy (Phase 5): REST `POST /estimate` p50 6.44 ms; 3 cách nhập, tuyến trên lưới zone, F3 end-to-end. Lớp live chờ Phase 6 | `evidence/serving/F3_end_to_end.md`, `evidence/screenshots/` |
 | 11 Taxi GPS live | Chỉ thiết kế [P]; producer giữ cùng schema message để thay được | không cần |
 | 12 Replay producer | Đã chạy (Phase 6): 41.981 message gốc, chèn 413 trùng, 223 trễ, 81 JSON hỏng, có manifest | `evidence/streaming/producer_manifest.json` |
 | 13 Kafka | Đã chạy: KRaft một node, topic 3 partition, tạo trước producer và consumer | `evidence/streaming/kafka_topic.txt`, `kafka_offsets.txt` |
-| 14 Structured Streaming | Đã chạy: 2 query, đối soát khớp mọi dòng trừ 15 bản trễ (đã giải thích bằng số đo) | `evidence/streaming/summary.md` |
+| 14 Structured Streaming | Đã chạy: 2 query, trang "Giám sát streaming" theo dõi trực tiếp, đối soát khớp mọi dòng trừ 15 bản trễ (đã giải thích bằng số đo) | `evidence/streaming/summary.md` |
 
 **Đề xuất ngoài đề đã được duyệt:** São João trong `holidays.csv`; phạt theo tần suất cạnh khi chọn tuyến (mặc định tắt); báo cáo cả có lọc và không lọc nhãn nhiễu; gắn cờ nhiễu GPS trên chuyến; giữ một bản cho chuyến ghi lặp.
 
@@ -209,7 +209,7 @@ Cập nhật mục này mỗi khi xong một phase. Chỉ được chuyển mộ
 
 - Khoảng ước lượng 80% cho ETA (mở rộng ngoài đề, đã duyệt): hiệu chỉnh trên sai số 04/2014, bao phủ 80.3% trên test. `estimate()` trả thêm `predicted_interval_min`.
 
-**Còn chờ quyết định:** có làm REST `POST /estimate` hay không. Hiện tại (Phase 5) Streamlit gọi hàm `estimate()` trong `src/serving/estimate.py`, trả đúng 4 trường của đề.
+- REST `POST /estimate` (FastAPI, `src/serving/api.py`, service `api` cổng 8000) bọc cùng hàm `estimate()` với giao diện; kiểm tra thứ tự feature khi khởi động; p50 6.44 ms. Bằng chứng: `evidence/serving/api.md`.
 
 **Lựa chọn thiết kế ở Phase 5 (đề không quy định chi tiết):** mức tắc của zone = tốc độ zone tại giờ đó / tốc độ cả ngày của chính zone (< 0,7 là tắc, < 0,9 là đông, cấu hình `ui`; dùng chữ "đông" để không lẫn với "chậm bất thường" của lớp live). Điểm A, B nằm ngoài mạng chính thì gắn vào zone gần nhất trong mạng chính. Danh sách 15 địa điểm có sẵn dùng tọa độ xấp xỉ, đã kiểm tra bằng dữ liệu.
 

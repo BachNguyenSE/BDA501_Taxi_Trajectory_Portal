@@ -7,6 +7,7 @@ Batch (Spark, MapReduce, Spark ML) và streaming (Kafka, Spark Structured Stream
 - Chống leakage: [docs/DATA_LEAKAGE.md](docs/DATA_LEAKAGE.md)
 - Bằng chứng (checklist A–H, streaming, red flag): [evidence/README.md](evidence/README.md)
 - Project card: [evidence/H_project_card.md](evidence/H_project_card.md)
+- Thay đổi so với báo cáo Session 9: [docs/CHANGES_SINCE_SESSION9.md](docs/CHANGES_SINCE_SESSION9.md)
 
 ## Yêu cầu
 
@@ -51,12 +52,20 @@ docker compose build spark
 | MapReduce trên YARN + đối chiếu | `run_mapreduce.sh` | `evidence/mapreduce` | ~130 s cho job (giả lập amd64) |
 | Spark ML | `run_ml.sh` | `models/`, `evidence/ml` | ~60 s |
 | Khoảng ước lượng 80% (mở rộng) | `docker compose run --rm --no-deps spark python src/ml/job_eta_interval.py` | `models/interval.json`, `evidence/ml/interval_validation.md` | ~1 phút |
-| MongoDB + giao diện | `run_demo.sh` | `evidence/mongo`, http://localhost:8501 | |
+| MongoDB + giao diện + REST API | `run_demo.sh` | `evidence/mongo`, http://localhost:8501, http://localhost:8000/docs | |
 | Streaming | `run_streaming.sh` | `evidence/streaming` | ~4–5 phút |
 
 Không chạy profile `hadoop` cùng lúc với Spark (không đủ RAM); các script tự dừng dịch vụ không cần.
 
 Kiểm tra thêm: `docker compose run --rm --no-deps spark python src/checks/check_routing.py` (bộ lọc cạnh đồ thị), `docker compose run --rm spark python src/checks/f3_end_to_end.py` (F3).
+
+## Gọi REST API
+
+```bash
+curl -s -X POST http://localhost:8000/estimate -H 'Content-Type: application/json' -d '{"origin":{"lat":41.2378,"lon":-8.6707},"destination":{"lat":41.1456,"lon":-8.6105},"departure_time":"2014-05-14T17:30:00"}'
+```
+
+`departure_time` là giờ Porto, không kèm múi giờ. Trang thử API: http://localhost:8000/docs
 
 ## Unit test
 
@@ -64,7 +73,7 @@ Kiểm tra thêm: `docker compose run --rm --no-deps spark python src/checks/che
 docker compose run --rm --no-deps spark python -m pytest tests -q
 ```
 
-31 test: hợp đồng bronze, silver và gold (gồm "không lọc bbox trước lag"), mapper / combiner / reducer khớp Spark, tìm tuyến, đánh giá model và leakage, khớp feature giữa phục vụ và huấn luyện, ground truth của producer.
+37 test: hợp đồng bronze, silver và gold (gồm "không lọc bbox trước lag"), mapper / combiner / reducer khớp Spark, tìm tuyến, đánh giá model và leakage, khớp feature giữa phục vụ và huấn luyện, ground truth của producer.
 
 ## Soạn code trong VS Code
 
@@ -76,4 +85,4 @@ Tạo `.venv` (Python 3.12) chỉ để có gợi ý code. Pipeline vẫn chạy
 
 ## Nhãn [I] / [P]
 
-[I] là phần đã implement và đã chạy, có bằng chứng trong `evidence/`. [P] là phần chỉ thiết kế: nguồn GPS live thật, lịch ETL và huấn luyện lại định kỳ, HDFS hoặc S3 cho cụm, REST `POST /estimate`. Bản phát lại dữ liệu ×60 **không phải real-time**.
+[I] là phần đã implement và đã chạy, có bằng chứng trong `evidence/`. [P] là phần chỉ thiết kế: nguồn GPS live thật, lịch ETL và huấn luyện lại định kỳ, HDFS hoặc S3 cho cụm. Bản phát lại dữ liệu ×60 **không phải real-time**.

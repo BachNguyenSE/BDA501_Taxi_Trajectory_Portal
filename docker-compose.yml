@@ -1,7 +1,7 @@
 # Docker Compose cho một máy (~12 vCPU, 8 GB RAM). Trạng thái: THIẾT KẾ (Phase 0).
 # Chia profile theo đề; KHÔNG chạy `hadoop` cùng lúc với Spark vì không đủ RAM.
 #
-#   mặc định  : spark, mongo, ui     docker compose up -d
+#   mặc định  : spark, mongo, ui, api   docker compose up -d
 #   hadoop    : HDFS + YARN          docker compose --profile hadoop up -d   (dừng spark trước)
 #   streaming : Kafka                docker compose --profile streaming up -d
 #
@@ -41,6 +41,22 @@ services:
       TZ: UTC
     ports:
       - "8501:8501"
+    mem_limit: 2g
+    depends_on: [mongo]
+
+  api:
+    # REST POST /estimate (mục 10), bọc cùng hàm estimate() với giao diện. Thử tại http://localhost:8000/docs
+    image: bda501/spark:py3.12-jdk17-pyspark4.0.1
+    working_dir: /workspace
+    command: ["uvicorn", "serving.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./:/workspace
+    environment:
+      PYTHONHASHSEED: "42"
+      PYTHONPATH: /workspace/src
+      TZ: UTC
+    ports:
+      - "8000:8000"
     mem_limit: 2g
     depends_on: [mongo]
 

@@ -1,0 +1,271 @@
+{
+  "health": {
+    "status": "ok",
+    "model": "spark_gbt_train_all",
+    "features": [
+      "straight_km",
+      "bearing_deg",
+      "hour",
+      "day_of_week",
+      "is_weekend",
+      "is_holiday"
+    ],
+    "feature_order_checked": true,
+    "interval": true
+  },
+  "latency_ms": {
+    "n": 50,
+    "p50": 6.44,
+    "p95": 11.88,
+    "max": 15.65,
+    "note": "50 cặp địa điểm có sẵn chọn ngẫu nhiên (seed 42), 6 khung giờ khác nhau; 5 lần khởi động không tính"
+  },
+  "f3_via_api": {
+    "trips": [
+      {
+        "trip_uid": "1399135956620000324-e9f400b4cb4a",
+        "departure_local": "2014-05-03 17:52:36",
+        "actual_min": 7.75,
+        "predicted_min": 8.16,
+        "interval_min": [
+          4.03,
+          12.1
+        ],
+        "actual_in_interval": true,
+        "route_zones": 4
+      },
+      {
+        "trip_uid": "1399217372620000084-820bb2161ff4",
+        "departure_local": "2014-05-04 16:29:32",
+        "actual_min": 32.75,
+        "predicted_min": 22.13,
+        "interval_min": [
+          12.21,
+          32.02
+        ],
+        "actual_in_interval": false,
+        "route_zones": 25
+      },
+      {
+        "trip_uid": "1399226240620000009-fe2e6f520dca",
+        "departure_local": "2014-05-04 18:57:20",
+        "actual_min": 4.5,
+        "predicted_min": 7.5,
+        "interval_min": [
+          3.38,
+          11.44
+        ],
+        "actual_in_interval": true,
+        "route_zones": 3
+      },
+      {
+        "trip_uid": "1399436669620000345-c751f9d2e6cb",
+        "departure_local": "2014-05-07 05:24:29",
+        "actual_min": 19.75,
+        "predicted_min": 15.52,
+        "interval_min": [
+          9.13,
+          22.09
+        ],
+        "actual_in_interval": true,
+        "route_zones": 21
+      },
+      {
+        "trip_uid": "1399459583620000314-6878bf927544",
+        "departure_local": "2014-05-07 11:46:23",
+        "actual_min": 16.0,
+        "predicted_min": 16.26,
+        "interval_min": [
+          9.87,
+          22.83
+        ],
+        "actual_in_interval": true,
+        "route_zones": 18
+      },
+      {
+        "trip_uid": "1399923831620000157-3f2fc0c35709",
+        "departure_local": "2014-05-12 20:43:51",
+        "actual_min": 14.25,
+        "predicted_min": 12.27,
+        "interval_min": [
+          7.41,
+          17.22
+        ],
+        "actual_in_interval": true,
+        "route_zones": 12
+      },
+      {
+        "trip_uid": "1400792965620000280-8b3e51e6e080",
+        "departure_local": "2014-05-22 22:09:25",
+        "actual_min": 4.0,
+        "predicted_min": 6.59,
+        "interval_min": [
+          3.13,
+          10.46
+        ],
+        "actual_in_interval": true,
+        "route_zones": 3
+      },
+      {
+        "trip_uid": "1401008173620000672-5185d048f01b",
+        "departure_local": "2014-05-25 09:56:13",
+        "actual_min": 16.0,
+        "predicted_min": 10.01,
+        "interval_min": [
+          5.59,
+          14.8
+        ],
+        "actual_in_interval": false,
+        "route_zones": 7
+      },
+      {
+        "trip_uid": "1402051073620000276-f93f8f781123",
+        "departure_local": "2014-06-06 11:37:53",
+        "actual_min": 12.25,
+        "predicted_min": 12.46,
+        "interval_min": [
+          6.55,
+          18.21
+        ],
+        "actual_in_interval": true,
+        "route_zones": 7
+      },
+      {
+        "trip_uid": "1402072726620000370-54d3a94ae5fe",
+        "departure_local": "2014-06-06 17:38:46",
+        "actual_min": 21.25,
+        "predicted_min": 20.52,
+        "interval_min": [
+          10.6,
+          30.41
+        ],
+        "actual_in_interval": true,
+        "route_zones": 13
+      },
+      {
+        "trip_uid": "1402263306620000508-5592c05ac9a3",
+        "departure_local": "2014-06-08 22:35:06",
+        "actual_min": 14.0,
+        "predicted_min": 11.53,
+        "interval_min": [
+          6.67,
+          16.48
+        ],
+        "actual_in_interval": true,
+        "route_zones": 7
+      },
+      {
+        "trip_uid": "1402400812620000486-ca45a182c757",
+        "departure_local": "2014-06-10 12:46:52",
+        "actual_min": 9.5,
+        "predicted_min": 9.19,
+        "interval_min": [
+          4.75,
+          13.82
+        ],
+        "actual_in_interval": true,
+        "route_zones": 5
+      },
+      {
+        "trip_uid": "1402634695620000574-f89dbc9ce7f8",
+        "departure_local": "2014-06-13 05:44:55",
+        "actual_min": 10.25,
+        "predicted_min": 8.88,
+        "interval_min": [
+          4.54,
+          13.55
+        ],
+        "actual_in_interval": true,
+        "route_zones": 7
+      },
+      {
+        "trip_uid": "1402794617620000351-cc61b9630341",
+        "departure_local": "2014-06-15 02:10:17",
+        "actual_min": 8.25,
+        "predicted_min": 11.08,
+        "interval_min": [
+          6.23,
+          16.04
+        ],
+        "actual_in_interval": true,
+        "route_zones": 10
+      },
+      {
+        "trip_uid": "1402913747620000112-b34a7c8b19a9",
+        "departure_local": "2014-06-16 11:15:47",
+        "actual_min": 14.5,
+        "predicted_min": 16.85,
+        "interval_min": [
+          10.46,
+          23.42
+        ],
+        "actual_in_interval": true,
+        "route_zones": 17
+      },
+      {
+        "trip_uid": "1402926001620000331-ff52615368d3",
+        "departure_local": "2014-06-16 14:40:01",
+        "actual_min": 17.25,
+        "predicted_min": 19.8,
+        "interval_min": [
+          9.88,
+          29.69
+        ],
+        "actual_in_interval": true,
+        "route_zones": 16
+      },
+      {
+        "trip_uid": "1403214774620000328-f4108ab2a852",
+        "departure_local": "2014-06-19 22:52:54",
+        "actual_min": 11.5,
+        "predicted_min": 12.44,
+        "interval_min": [
+          6.53,
+          18.19
+        ],
+        "actual_in_interval": true,
+        "route_zones": 17
+      },
+      {
+        "trip_uid": "1403580092620000503-fed30b986eb1",
+        "departure_local": "2014-06-24 04:21:32",
+        "actual_min": 9.5,
+        "predicted_min": 11.77,
+        "interval_min": [
+          6.92,
+          16.73
+        ],
+        "actual_in_interval": true,
+        "route_zones": 9
+      },
+      {
+        "trip_uid": "1403766605620000281-0a157e03970e",
+        "departure_local": "2014-06-26 08:10:05",
+        "actual_min": 14.75,
+        "predicted_min": 18.51,
+        "interval_min": [
+          8.59,
+          28.4
+        ],
+        "actual_in_interval": true,
+        "route_zones": 17
+      },
+      {
+        "trip_uid": "1403958872620000456-ea4f40badea2",
+        "departure_local": "2014-06-28 13:34:32",
+        "actual_min": 28.25,
+        "predicted_min": 18.27,
+        "interval_min": [
+          8.36,
+          28.16
+        ],
+        "actual_in_interval": false,
+        "route_zones": 16
+      }
+    ],
+    "mae_min": 2.94,
+    "actual_in_interval": 17,
+    "note": "20 chuyến mẫu đã bỏ chuyến nhiễu GPS và chuyến dưới 1 km: chỉ minh họa, số đánh giá chính thức ở E_model_validation.md"
+  },
+  "invalid_request_status": 422
+}

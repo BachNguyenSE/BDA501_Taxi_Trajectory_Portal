@@ -112,16 +112,9 @@ class Estimator:
     def predict(self, feats: dict) -> float:
         from pyspark.ml.linalg import Vectors
         vec = Vectors.dense([float(feats[f]) for f in self.meta["features"]])  # đúng thứ tự trong features.json
-        df = self.spark_df([(vec,)])
-        model = self.model()
-        row = model.transform(df).first()
-        if row is None:
-            raise ValueError("model không trả về dự đoán")
-        return float(row[model.getPredictionCol()])
-
-    def spark_df(self, rows):
-        self.model()
-        return self.spark.createDataFrame(rows, ["features"])
+        # dự đoán một vector trực tiếp trên driver (không tạo DataFrame, không chạy job Spark):
+        # cùng kết quả với model.transform, nhưng ~0,3 ms thay vì ~260 ms (đo trong checks, xem evidence/serving)
+        return float(self.model().predict(vec))
 
     # ---- đồ thị theo giờ
     def graph(self, hour, is_weekend):

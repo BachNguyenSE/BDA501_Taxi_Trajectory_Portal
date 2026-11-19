@@ -2,7 +2,7 @@
 # Bước 6. Kafka + replay producer + Spark Structured Streaming + đối soát với manifest (src/streaming/).
 # Dùng: scripts/run_streaming.sh
 # Thứ tự (đề: tạo topic TRƯỚC khi chạy producer và consumer; lần trước bị race khi producer xóa topic):
-#   1. dừng giao diện (đủ RAM), bật Kafka + Mongo
+#   1. bật Kafka + Mongo + giao diện (mở trang "Giám sát streaming" để xem trực tiếp)
 #   2. tạo lại topic khi CHƯA có consumer nào, xóa checkpoint và collection streaming cũ
 #   3. bật Spark streaming (chạy nền), chờ sẵn sàng
 #   4. chạy producer; xong thì job tự dừng khi hết dữ liệu mới
@@ -15,8 +15,8 @@ TOPIC=gps-segments
 KT="docker compose exec -T kafka /opt/kafka/bin"
 
 echo "== 1. Kafka + Mongo"
-docker compose stop ui >/dev/null 2>&1 || true
-docker compose --profile streaming up -d kafka mongo
+docker compose --profile streaming up -d kafka mongo ui
+echo "   Mở http://localhost:8501 -> trang 'Giám sát streaming' để xem trực tiếp"
 for _ in $(seq 1 60); do $KT/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1 && break; sleep 2; done
 
 echo "== 2. Tạo topic (chưa có consumer), dọn trạng thái cũ"
@@ -43,5 +43,4 @@ docker rm bda501-stream >/dev/null
 echo "== 5. Đối soát"
 $KT/kafka-get-offsets.sh --bootstrap-server localhost:9092 --topic "$TOPIC" | tee "$EV/kafka_offsets.txt"
 docker compose run --rm --no-deps spark python src/streaming/reconcile.py
-docker compose up -d ui
-echo "Giao diện: http://localhost:8501 (lớp live đã có dữ liệu)"
+echo "Giao diện: http://localhost:8501 (trang 'Giám sát streaming' giữ kết quả lần chạy này để xem lại)"

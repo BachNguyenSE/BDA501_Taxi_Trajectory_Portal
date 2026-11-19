@@ -1,6 +1,6 @@
 # Chống data leakage: quy tắc và cách chứng minh
 
-> **Trạng thái: ĐÃ KIỂM (Phase 4).** Các kiểm tra ở mục 4 đã chạy tự động trong `src/ml/job_train_eta.py` và unit test `tests/test_ml.py`; kết quả ở `evidence/ml/leakage_checks_full.json` và `evidence/ml/E_model_validation.md`. Báo cáo cả có lọc và không lọc nhãn nhiễu: đã duyệt và đã làm. Feature từ đồ thị tuyến: chưa làm.
+> **Trạng thái: ĐÃ KIỂM (Phase 4).** Các kiểm tra ở mục 4 đã chạy tự động trong `src/ml/job_train_eta.py` và unit test `tests/test_ml.py`; kết quả ở `evidence/ml/leakage_checks_full.json` và `evidence/ml/E_model_validation.md`. Báo cáo cả có lọc và không lọc nhãn nhiễu: đã duyệt và đã làm. Feature từ đồ thị tuyến: đã làm theo đúng thiết kế (đồ thị chỉ từ train, out-of-fold theo tuần, quyết định trên validation), bằng chứng `evidence/ml/graph_features.md`.
 
 Dùng cho Card F1/F2 và để trả lời thầy. Nguyên tắc duy nhất: **khi dự đoán một chuyến, model chỉ được biết những gì hệ thống biết tại thời điểm khách đặt xe.**
 

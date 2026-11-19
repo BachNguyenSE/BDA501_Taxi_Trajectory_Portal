@@ -16,6 +16,7 @@ from zoneinfo import ZoneInfo
 from pymongo import DESCENDING, ASCENDING, MongoClient, ReplaceOne  # noqa: E402
 from pyspark.sql import DataFrame, SparkSession  # noqa: E402
 from pyspark.sql import functions as F  # noqa: E402
+from pyspark.sql.streaming import StreamingQueryListener  # noqa: E402
 from pyspark.sql.types import DoubleType, IntegerType, LongType, StringType, StructField, StructType  # noqa: E402
 
 from core.common import ROOT, load_config  # noqa: E402
@@ -48,6 +49,39 @@ def clean_segments(valid: DataFrame, cfg) -> DataFrame:
             .withColumn("zone_id", zone_id((F.col("prev_lon") + F.col("lon")) / 2, (F.col("prev_lat") + F.col("lat")) / 2, grid)))
 
 
+class ProgressToMongo(StreamingQueryListener):
+    """Sau MỖI micro-batch, ghi tiến độ của query vào stream_quality (type = "progress") để trang
+    "Giám sát streaming" hiển thị: giờ sự kiện mới nhất, watermark, số dòng vào, số dòng bị bỏ vì trùng
+    hoặc vì trễ quá watermark. Chỉ đọc số liệu Spark tự báo, không thay đổi xử lý."""
+
+    def __init__(self, db, run_id):
+        super().__init__()
+        self.db, self.run_id = db, run_id
+
+    def onQueryStarted(self, event):
+        pass
+
+    def onQueryIdle(self, event):
+        pass
+
+    def onQueryTerminated(self, event):
+        pass
+
+    def onQueryProgress(self, event):
+        p = json.loads(event.progress.json)
+        ops = p.get("stateOperators") or []
+        doc = {
+            "type": "progress", "run_id": self.run_id, "query": p.get("name"), "batch_id": p.get("batchId"),
+            "processed_at": time.time(), "num_input_rows": p.get("numInputRows", 0),
+            "batch_duration_ms": p.get("batchDuration"),
+            "event_time_max_utc": (p.get("eventTime") or {}).get("max"),
+            "watermark_utc": (p.get("eventTime") or {}).get("watermark"),
+            "dropped_by_watermark": sum(o.get("numRowsDroppedByWatermark", 0) for o in ops),
+            "dropped_duplicates": sum((o.get("customMetrics") or {}).get("numDroppedDuplicateRows", 0) for o in ops),
+        }
+        self.db.stream_quality.replace_one({"_id": f"progress|{doc['query']}|{doc['batch_id']}"}, doc, upsert=True)
+
+
 def main():
     cfg = load_config()
     st, mc = cfg["streaming"], cfg["mongo"]
@@ -60,7 +94,7 @@ def main():
     db = MongoClient(mc["uri"], serverSelectionTimeoutMS=10000)[mc["database"]]
     db.zone_speed_live.create_index([("window_end", DESCENDING), ("zone_id", ASCENDING)], name="window_end_zone")
 
-    spark = (SparkSession.builder.master("local[*]").appName("phase6-streaming")
+    spark = (SparkSession.builder.master("local[*]").appName("job-streaming")
              .config("spark.driver.memory", cfg["spark"]["driver_memory"])
              .config("spark.sql.shuffle.partitions", "6")
              .config("spark.sql.session.timeZone", "UTC")
@@ -69,6 +103,14 @@ def main():
              .config("spark.sql.streaming.numRecentProgressUpdates", "10000")
              .getOrCreate())
     spark.sparkContext.setLogLevel("WARN")
+
+    # thông tin lần chạy, cho trang giám sát biết khung phát lại và trạng thái
+    run_id = time.strftime("%Y%m%dT%H%M%S")
+    run_doc = {"type": "run", "run_id": run_id, "status": "running", "started_at": time.time(),
+               "window_local": st["replay"]["window_local"], "speedup": st["replay"]["speedup"],
+               "watermark": sp["watermark"], "window": sp["window"], "slide": sp["slide"], "trigger": sp["trigger"]}
+    db.stream_quality.replace_one({"_id": "run|current"}, run_doc, upsert=True)
+    spark.streams.addListener(ProgressToMongo(db, run_id))
 
     src = (spark.readStream.format("kafka")
            .option("kafka.bootstrap.servers", kc["bootstrap"]).option("subscribe", kc["topic"])
@@ -82,8 +124,8 @@ def main():
         n, bad = (r["n"], r["bad"] or 0) if r else (0, 0)
         if n:
             db.stream_quality.replace_one({"_id": f"quality|{batch_id}"},
-                                          {"batch_id": batch_id, "n_messages": n, "n_corrupt_json": bad,
-                                           "processed_at": time.time()}, upsert=True)
+                                          {"type": "quality", "run_id": run_id, "batch_id": batch_id, "n_messages": n,
+                                           "n_corrupt_json": bad, "processed_at": time.time()}, upsert=True)
 
     q_quality = (parsed.writeStream.queryName("quality").foreachBatch(write_quality)
                  .option("checkpointLocation", str(ck / "quality")).trigger(processingTime=sp["trigger"]).start())
@@ -145,6 +187,7 @@ def main():
                "config": {k: sp[k] for k in ["trigger", "watermark", "window", "slide", "max_offsets_per_trigger", "dedup_keys"]}}
     q_quality.stop()
     q_live.stop()
+    db.stream_quality.update_one({"_id": "run|current"}, {"$set": {"status": "stopped", "ended_at": time.time()}})
     ev = ROOT / "evidence" / "streaming"
     ev.mkdir(parents=True, exist_ok=True)
     (ev / "spark_stream_metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
